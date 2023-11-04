@@ -1,0 +1,28 @@
+@use "@/styles/variables.scss";
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: variables.$max-width;
+  padding: 2rem 0;
+  width: 100%;
+
+  & form {
+    grid-column: 1 / -1;
+  }
+}
+
+@media screen and (min-width: 472px) {
+  .controls {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr auto;
+  }
+}
+
+@media screen and (min-width: 692px) {
+  .controls {
+    grid-template-columns: repeat(3, 1fr) auto;
+  }
+}

@@ -1,0 +1,43 @@
+@use "@/styles/variables.scss";
+
+.characters {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  margin: 0 auto;
+  max-width: variables.$max-width;
+  padding: 2rem 0;
+  width: 100%;
+
+  img {
+    aspect-ratio: 1 / 1;
+    height: auto;
+    pointer-events: none;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  p {
+    bottom: 0;
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 50%, rgba(0, 0, 0, 0.5) 100%);
+    color: variables.$main-color;
+    font: variables.$fz-lg variables.$font;
+    padding-block-end: 1rem;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 0 10px #000;
+    width: 100%;
+
+    &::before {
+      background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: -100%;
+      left: 0;
+    }
+  }
+}
