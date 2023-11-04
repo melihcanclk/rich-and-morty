@@ -5,12 +5,10 @@ import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 
 const CharacterGrid = () => {
-	const { characters,  error, loading } = useSelector((state: RootState) => state.userSelections);
+	const { characters } = useSelector((state: RootState) => state.userSelections);
 
 	return (
 		<section id="characters" className={styles.characters} >
-			{loading && <div className="skeleton" />}
-			{error && <div className="error">{error}</div>}
 			{characters?.map((character: CharacterModel) => (
 				<Card key={character.id} character={character} />
 			))}

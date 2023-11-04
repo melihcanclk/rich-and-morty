@@ -6,19 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import Search from "@/components/Search";
 
 const Controls = () => {
-	const handleSearch = (name: string) => {
-		// search
-		console.log("search: " + name)
-	};
+	
 	const filters = useSelector((state: any) => state.userSelections.filters);
 	const dispatch = useDispatch();
 
+	
+
+	
 	return (
 		<section className={styles.controls}>
 			<Search
 				placeholder="Search a character..."
 				loading={false}
-				onSearch={handleSearch}
 			/>
 			<Dropdown
 				title="Status"

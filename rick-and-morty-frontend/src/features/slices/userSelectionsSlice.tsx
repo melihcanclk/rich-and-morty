@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/store/store";
 import { CharacterModel, InfoModel } from "@/types";
 import { getLocalStorage } from "@/utils/getLocalStorage";
@@ -60,6 +60,25 @@ results.map((c: CharacterModel) => {
     return c;
 });
 
+export const fetchData = createAsyncThunk(
+    "userSelections/fetchData",
+    async (filters: Filter) => {
+        const query = new URLSearchParams();
+        if (filters.page) query.set("page", filters.page.toString());
+        if (filters.search) query.set("name", filters.search);
+        if (filters.status) query.set("status", filters.status);
+        if (filters.species) query.set("species", filters.species);
+        if (filters.gender) query.set("gender", filters.gender);
+        const { info, results, error } = await fetch(`${CHARACTER}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
+        if (results) {
+            // return { info, results, error };
+            return { info, results, error };
+        } else {
+            return { info, results: [], error };
+        }
+    }
+);
+
 // init state
 const initialState = {
     characters: results as CharacterModel[],
@@ -77,7 +96,7 @@ const userSelectionsSlice = createSlice({
     name: "userSelections",
     initialState,
     reducers: {
-        addFavourite(state, action) {
+        addFavourite(state: UserSelectionsState, action: PayloadAction<CharacterModel>) {
             state.favorites.push(action.payload);
             state.characters.map((c: CharacterModel) => {
                 if (c.id === action.payload.id) {
@@ -128,6 +147,30 @@ const userSelectionsSlice = createSlice({
             localStorage.setItem("gender", "");
         }
     },
+    extraReducers: (builder) => {
+        builder.addCase(fetchData.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(fetchData.fulfilled, (state, action) => {
+            state.characters = action.payload.results;
+            // mark favorites
+            state.characters.map((c: CharacterModel) => {
+                if (state.favorites.some((f: CharacterModel) => f.id === c.id)) {
+                    c.isFavorite = true;
+                } else {
+                    c.isFavorite = false;
+                }
+                return c;
+            });
+            state.info = action.payload.info;
+            state.error = action.payload.error;
+            state.loading = false;
+        });
+        builder.addCase(fetchData.rejected, (state, action) => {
+            state.error = action.error.message ?? "";
+            state.loading = false;
+        });
+    }
 });
 
 

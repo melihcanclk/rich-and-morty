@@ -12,6 +12,7 @@
   transition: all 0.3s ease-in-out;
   width: 100%;
   will-change: box-shadow;
+  grid-column: 1 / -1;
 
   &:hover,
   &:active,

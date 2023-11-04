@@ -8,10 +8,6 @@
   max-width: variables.$max-width;
   padding: 2rem 0;
   width: 100%;
-
-  & form {
-    grid-column: 1 / -1;
-  }
 }
 
 @media screen and (min-width: 472px) {
