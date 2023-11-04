@@ -1,46 +1,49 @@
-import React from "react";
 import styles from "./Controls.module.scss";
 import Button from "@/components/Button";
-import { UserContext } from "@/context";
-import { FiltersContext } from "@/context";
 import Dropdown from "@/components/Dropdown";
-import { CharacterSearchModel } from "@/types";
+import { resetFilters, setGender, setSpecies, setStatus } from "@/features/slices/userSelectionsSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Controls = () => {
-	const {
-		suggestions,
-		suggestionsError,
-		suggestionsLoading,
-		setSuggestionsLoading,
-		handleGetSuggestions,
-		newSearch,
-		setNewSearch,
-	} = React.useContext(UserContext);
-	const { status, search, species, gender, setSearch, setStatus, setSpecies, setGender, resetFilters } =
-		React.useContext(FiltersContext);
+	// const {
+	// 	suggestions,
+	// 	suggestionsError,
+	// 	suggestionsLoading,
+	// 	setSuggestionsLoading,
+	// 	handleGetSuggestions,
+	// 	newSearch,
+	// 	setNewSearch,
+	// } = React.useContext(UserContext);
+	// const { status, search, species, gender, setSearch, setStatus, setSpecies, setGender, resetFilters } =
+	// 	React.useContext(FiltersContext);
 
-	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setNewSearch(e.target.value);
-	};
+	const dispatch = useDispatch();
+	const filters = useSelector((state: any) => state.userSelections.filters);
+	console.log({ filters });
 
-	const handleSearch = (name: string) => {
-		setSearch(name);
-		setNewSearch(name);
-	};
 
-	React.useEffect(() => {
-		if (suggestions.some((s: CharacterSearchModel) => s.name === newSearch)) {
-			return;
-		}
+	// const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	setNewSearch(e.target.value);
+	// };
 
-		setSuggestionsLoading(true);
+	// const handleSearch = (name: string) => {
+	// 	setSearch(name);
+	// 	setNewSearch(name);
+	// };
 
-		const timeoutId = setTimeout(() => {
-			handleGetSuggestions();
-		}, 500);
+	// React.useEffect(() => {
+	// 	if (suggestions.some((s: CharacterSearchModel) => s.name === newSearch)) {
+	// 		return;
+	// 	}
 
-		return () => clearTimeout(timeoutId);
-	}, [newSearch]); // eslint-disable-line react-hooks/exhaustive-deps
+	// 	setSuggestionsLoading(true);
+
+	// 	const timeoutId = setTimeout(() => {
+	// 		handleGetSuggestions();
+	// 	}, 500);
+
+	// 	return () => clearTimeout(timeoutId);
+	// }, [newSearch]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<section className={styles.controls}>
@@ -54,27 +57,27 @@ const Controls = () => {
 				onSearch={handleSearch}
 			/> */}
 			<Dropdown
-				title="Status..."
+				title="Status"
 				options={["alive", "dead", "unknown"]}
-				setValue={setStatus}
-				value={status}
+				setValue={(value: string) => dispatch(setStatus(value))}
+				value={filters.status}
 			/>
 			<Dropdown
-				title="Species..."
+				title="Species"
 				options={["human", "humanoid", "alien", "unknown"]}
-				setValue={setSpecies}
-				value={species}
+				setValue={(value: string) => dispatch(setSpecies(value))}
+				value={filters.species}
 			/>
 			<Dropdown
-				title="Gender..."
+				title="Gender"
 				options={["female", "male", "genderless", "unknown"]}
-				setValue={setGender}
-				value={gender}
+				setValue={(value: string) => dispatch(setGender(value))}
+				value={filters.gender}
 			/>
 			<Button
 				type="button"
-				onClick={resetFilters}
-				disabled={!status && !search && !species && !gender}
+				onClick={() => dispatch(resetFilters())}
+				disabled={!filters.species && !filters.search && !filters.status && !filters.gender}
 			>
 				Reset filters
 			</Button>

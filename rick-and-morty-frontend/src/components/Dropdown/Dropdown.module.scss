@@ -1,9 +1,17 @@
 @use "@/styles/variables.scss";
 
+.label {
+  display: inline-block;
+  color: variables.$main-color;
+  font: variables.$fz-md variables.$font;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .dropdown {
   border: 1px solid variables.$main-color;
   border-radius: 1rem;
-  display: inline-block;
+  display: flex;
   padding-right: 0.5rem;
 
   &:focus-within {

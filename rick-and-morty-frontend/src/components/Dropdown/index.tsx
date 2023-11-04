@@ -10,22 +10,28 @@ interface Props {
 
 const Dropdown = ({ title = "", options = [], setValue, value }: Props) => {
 	return (
-		<label htmlFor={title} className={styles.dropdown}>
-			<select
-				className={styles.dropdown__select}
-				id={title}
-				onChange={(e) => setValue(e.target.value.toLowerCase())}
-				title={title}
-				value={value}
-			>
-				{title && <option value="">{title}</option>}
-				{options.map((option) => (
-					<option key={option} value={option}>
-						{option}
-					</option>
-				))}
-			</select>
-		</label>
+		<div >
+			<label htmlFor={title} className={styles.label}>
+				{title}
+			</label>
+			<div className={styles.dropdown}>
+				<select
+					className={styles.dropdown__select}
+					id={title}
+					onChange={(e) => setValue(e.target.value.toLowerCase())}
+					title={title}
+					value={value}
+				>
+					{<option value="">{"Not Selected"}</option>}
+					{options.map((option) => (
+						<option key={option} value={option}>
+							{option}
+						</option>
+					))}
+				</select>
+			</div>
+		</div>
+
 	);
 };
 

@@ -4,21 +4,22 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/index.tsx'
 import NotFound from './pages/NotFound/index.tsx'
 import AllCharacters from './pages/AllCharacters/index.tsx'
-import { UserProvider, FiltersProvider } from "@/context";
 import '@/styles/global.scss'
+import FiltersProvider from '@/providers/FiltersProvider.tsx'
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    {/* <UserProvider> */}
     <FiltersProvider>
-      <UserProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="all-characters" element={<AllCharacters />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="all-characters" element={<AllCharacters />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </FiltersProvider>
+    {/* </UserProvider> */}
   </React.StrictMode >
 )

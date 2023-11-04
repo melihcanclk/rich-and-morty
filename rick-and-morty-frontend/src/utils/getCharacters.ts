@@ -1,7 +1,7 @@
-import { CharacterModel, CharacterSearchModel, InfoModel } from "models";
+import { CharacterModel, InfoModel } from "@/types/";
 import { BASE_URL } from "@/utils/constants";
 
-const API = BASE_URL + '/character';
+export const CHARACTER = BASE_URL + '/character';
 
 interface Props {
     page: number;
@@ -20,17 +20,6 @@ interface getCharactersInterface {
 
 export const getCharacters = async ({ search, page = 1, status, species, gender }: Props): Promise<getCharactersInterface> => {
     const query = `page=${page}&name=${search}&status=${status}&species=${species}&gender=${gender}`
-    const { info, results, error } = await fetch(`${API}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
+    const { info, results, error } = await fetch(`${CHARACTER}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
     return { info: info, results: results, error: error, p: error ? 1 : page }
-}
-
-interface getSuggestionsInterface {
-    suggestions: CharacterSearchModel[];
-    error: string;
-}
-
-export const getSuggestions = async (search: string): Promise<getSuggestionsInterface> => {
-    const { results, error } = await fetch(`${API}?name=${search}`).then(res => res.json().catch((e) => console.error(`Error: ${e}`)))
-
-    return { suggestions: results ? results.map((c: CharacterSearchModel) => ({ name: c.name, image: c.image })) : [], error }
 }

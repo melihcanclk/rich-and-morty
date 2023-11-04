@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { FiltersContext } from "@/context";
 import { useLocalStorage } from "@/hooks";
-import { getCharacters, getDimension, getSuggestions } from "@/utils";
-import { CharacterModel, CharacterSearchModel, InfoModel } from "@/models";
+import { getCharacters, getDimension} from "@/utils";
+import { CharacterModel, CharacterSearchModel, InfoModel } from "@/types";
 
 const baseCharacter: CharacterModel = {
     id: 1,

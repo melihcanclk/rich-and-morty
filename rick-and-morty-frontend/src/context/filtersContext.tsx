@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { useLocalStorage } from "/src/hooks";
+import { useLocalStorage } from "@/hooks";
 
 const FiltersContext = createContext({
 	page: 1,

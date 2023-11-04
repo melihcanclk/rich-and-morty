@@ -1,19 +1,18 @@
 
-import { UserContext } from "@/context";
 import styles from "./Card.module.scss";
-import imgError from "@/assets/img/error.png";
 import { lazyLoading } from "@/utils";
 import React from "react";
 import { Heart } from "@/assets/icons/Heart";
 import { CharacterModel } from "@/types";
-const clicked = "character";
+import { useDispatch } from "react-redux";
+import { addFavourite, removeFavorite } from "@/features/slices/userSelectionsSlice";
 
 interface Props {
     character: CharacterModel;
 }
 
 const Card: React.FC<Props> = ({ character }) => {
-    const { lastFocus, modal, setFavorite, removeFavorite } = React.useContext(UserContext);
+    const dispatch = useDispatch();
     const imgRef = React.useRef<HTMLImageElement>(null);
 
     React.useEffect(() => {
@@ -22,28 +21,13 @@ const Card: React.FC<Props> = ({ character }) => {
         }
     }, [character]);
 
-    React.useEffect(() => {
-        if (!modal && lastFocus) {
-            const character = document.getElementById(lastFocus);
-            if (character) {
-                character.focus();
-            }
-        }
-    }, [lastFocus, modal]);
 
     const handleOnClickFavorite = (e: React.SyntheticEvent<EventTarget>) => {
         e.stopPropagation();
         e.preventDefault();
-        character.isFavorite ? removeFavorite(character) : setFavorite(character);
-    };
-
-    const handleOnKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === "Enter" || e.key === " ") {
-            e.stopPropagation();
-            e.preventDefault();
-
-            character.isFavorite ? removeFavorite(character) : setFavorite(character);
-        }
+        character.isFavorite ?
+            dispatch(removeFavorite(character)) :
+            dispatch(addFavourite(character));
     };
 
     return (
@@ -51,19 +35,6 @@ const Card: React.FC<Props> = ({ character }) => {
             id={`character-${character?.id}`}
             key={character?.id}
             className={`${styles.character} skeleton`}
-            data-id={character?.id}
-            data-image={character?.image || imgError}
-            aria-label={`Name of the character is ${character?.name}`}
-            data-location={character?.location?.name}
-            data-name={character?.name}
-            data-origin-name={character?.origin?.name}
-            data-origin-url={character?.origin?.url}
-            data-status={character?.status}
-            data-species={character?.species}
-            data-type={character?.type}
-            data-gender={character?.gender}
-            data-is-favorite={character?.isFavorite}
-            data-clicked-from={clicked}
             title={`See details of ${character?.name}`}
             type="button"
         >
@@ -73,7 +44,6 @@ const Card: React.FC<Props> = ({ character }) => {
                         title="Remove from favorites"
                         className={styles.favorite}
                         onClick={handleOnClickFavorite}
-                        onKeyDown={handleOnKeyDown}
                         tabIndex={0}
                     >
                         <Heart />
@@ -82,7 +52,6 @@ const Card: React.FC<Props> = ({ character }) => {
                     <div
                         title="Add to favorites"
                         onClick={handleOnClickFavorite}
-                        onKeyDown={handleOnKeyDown}
                         tabIndex={0}
                     >
                         <Heart />
