@@ -2,7 +2,7 @@ import Card from "@/components/Card";
 import styles from "./CharacterGrid.module.scss";
 import { CharacterModel } from "@/types";
 import { RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const CharacterGrid = () => {
 	const { characters,  error, loading } = useSelector((state: RootState) => state.userSelections);

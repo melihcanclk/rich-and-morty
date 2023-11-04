@@ -4,7 +4,6 @@ import { CharacterModel, InfoModel } from "@/types";
 import { getLocalStorage } from "@/utils/getLocalStorage";
 import { CHARACTER } from "@/utils/getCharacters";
 
-// todo object
 type UserSelectionsState = {
     characters: CharacterModel[],
     character: CharacterModel,
@@ -14,7 +13,8 @@ type UserSelectionsState = {
     modal: boolean,
     lastFocus: string,
     favorites: CharacterModel[],
-    filters: Filter
+    filters: Filter,
+    search: string,
 };
 
 type Filter = {
@@ -28,7 +28,6 @@ type Filter = {
 // init state
 const initialStateFilter = {
     page: parseInt(getLocalStorage("page", 1)),
-    search: getLocalStorage("search", ""),
     status: getLocalStorage("status", ""),
     species: getLocalStorage("species", ""),
     gender: getLocalStorage("gender", "")
@@ -70,7 +69,8 @@ const initialState = {
     character: {} as CharacterModel,
     modal: initialModal as boolean,
     favorites: initialFavorites as CharacterModel[],
-    filters: initialStateFilter
+    filters: initialStateFilter,
+    search: "" as string
 } as UserSelectionsState;
 
 const userSelectionsSlice = createSlice({
@@ -103,7 +103,6 @@ const userSelectionsSlice = createSlice({
         },
         setSearch(state, action) {
             state.filters.search = action.payload;
-            localStorage.setItem("search", action.payload);
         },
         setStatus(state, action) {
             state.filters.status = action.payload;
@@ -122,11 +121,8 @@ const userSelectionsSlice = createSlice({
             state.filters.gender = "";
             state.filters.species = "";
             state.filters.status = "";
-            state.filters.search = "";
             // set localStorage
             localStorage.setItem("page", "1");
-            localStorage.setItem("search", "");
-            localStorage.setItem("newSearch", "");
             localStorage.setItem("status", "");
             localStorage.setItem("species", "");
             localStorage.setItem("gender", "");

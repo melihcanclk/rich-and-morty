@@ -1,0 +1,153 @@
+@use "@/styles/variables.scss";
+
+.search {
+  align-items: center;
+  background: transparent;
+  border: 1px solid variables.$main-color;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem 0 variables.$main-color;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  will-change: box-shadow;
+
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: 0 0 1rem 0.3rem variables.$main-color;
+  }
+
+  &__input {
+    border: none;
+    background-color: transparent;
+    caret-color: rgba(variables.$secondary-text-color, 0.8);
+    color: variables.$main-color;
+    font: variables.$fz-md variables.$font;
+    height: 100%;
+    overflow-x: hidden;
+    padding: 1rem 1rem 1rem 2rem;
+    text-overflow: ellipsis;
+    width: 100%;
+    white-space: nowrap;
+
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: rgba(variables.$main-color, 1);
+      font: variables.$fz-md variables.$font;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__reset {
+    background: none;
+    border: none;
+    height: variables.$fz-lg;
+    margin-right: 1rem;
+    width: variables.$fz-lg;
+
+    svg {
+      fill: variables.$main-color;
+      cursor: pointer;
+      height: 100%;
+      width: 100%;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      outline: none;
+
+      svg {
+        fill: variables.$error;
+      }
+    }
+  }
+
+  &__button {
+    align-items: center;
+    background-color: variables.$main-color;
+    border: none;
+    border-radius: 0 0.7rem 0.7rem 0;
+    cursor: pointer;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 4rem;
+    svg {
+      fill: variables.$main-text-color;
+      height: 100%;
+    }
+
+    &:disabled{
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    &:not([disabled]):hover, &:not([disabled]):focus {
+      filter: brightness(1.1);
+      transform: scale(1.1);
+    }
+  }
+
+
+
+  .suggestions {
+    background: variables.$gradient;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 1rem 1rem rgba(variables.$bg-color, 0.4);
+    left: 0;
+    max-height: 20rem;
+    overflow-y: scroll;
+    padding: 0.5rem 0;
+    position: absolute;
+    top: calc(100% + 1rem);
+    transform: translate(-0.1rem, 0);
+    width: calc(100% + 0.2rem);
+    z-index: 2;
+
+    .error {
+      color: variables.$error;
+      font: variables.$fz-md variables.$font;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    button {
+      align-items: center;
+      background: none;
+      border: none;
+      color: variables.$main-color;
+      cursor: pointer;
+      display: flex;
+      font: variables.$fz-lg variables.$font;
+      justify-content: space-between;
+      padding: 0.5rem 2rem;
+      text-align: left;
+      width: 100%;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background: rgba(variables.$main-color, 0.1);
+        font-weight: bold;
+        outline: none;
+      }
+
+      img {
+        border-radius: 0.5rem;
+        height: 4rem;
+        width: 4rem;
+      }
+    }
+  }
+}

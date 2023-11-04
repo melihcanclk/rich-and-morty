@@ -3,59 +3,23 @@ import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown";
 import { resetFilters, setGender, setSpecies, setStatus } from "@/features/slices/userSelectionsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Search from "@/components/Search";
 
 const Controls = () => {
-	// const {
-	// 	suggestions,
-	// 	suggestionsError,
-	// 	suggestionsLoading,
-	// 	setSuggestionsLoading,
-	// 	handleGetSuggestions,
-	// 	newSearch,
-	// 	setNewSearch,
-	// } = React.useContext(UserContext);
-	// const { status, search, species, gender, setSearch, setStatus, setSpecies, setGender, resetFilters } =
-	// 	React.useContext(FiltersContext);
-
-	const dispatch = useDispatch();
+	const handleSearch = (name: string) => {
+		// search
+		console.log("search: " + name)
+	};
 	const filters = useSelector((state: any) => state.userSelections.filters);
-	console.log({ filters });
-
-
-	// const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-	// 	setNewSearch(e.target.value);
-	// };
-
-	// const handleSearch = (name: string) => {
-	// 	setSearch(name);
-	// 	setNewSearch(name);
-	// };
-
-	// React.useEffect(() => {
-	// 	if (suggestions.some((s: CharacterSearchModel) => s.name === newSearch)) {
-	// 		return;
-	// 	}
-
-	// 	setSuggestionsLoading(true);
-
-	// 	const timeoutId = setTimeout(() => {
-	// 		handleGetSuggestions();
-	// 	}, 500);
-
-	// 	return () => clearTimeout(timeoutId);
-	// }, [newSearch]); // eslint-disable-line react-hooks/exhaustive-deps
+	const dispatch = useDispatch();
 
 	return (
 		<section className={styles.controls}>
-			{/* <Search
-				suggestions={suggestions}
+			<Search
 				placeholder="Search a character..."
-				value={newSearch}
-				loading={suggestionsLoading}
-				error={suggestionsError}
-				onChange={handleSearchChange}
+				loading={false}
 				onSearch={handleSearch}
-			/> */}
+			/>
 			<Dropdown
 				title="Status"
 				options={["alive", "dead", "unknown"]}
@@ -77,7 +41,7 @@ const Controls = () => {
 			<Button
 				type="button"
 				onClick={() => dispatch(resetFilters())}
-				disabled={!filters.species && !filters.search && !filters.status && !filters.gender}
+				disabled={!filters.species && !filters.status && !filters.gender}
 			>
 				Reset filters
 			</Button>
