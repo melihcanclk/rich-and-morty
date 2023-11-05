@@ -1,14 +1,14 @@
-import CharacterInfo from "@/components/CharacterInfo";
+import LocationInfo from "@/components/LocationInfo";
 import { useParams } from "react-router-dom";
 
-const Character = () => {
+const Location = () => {
     const { id: id } = useParams();
 
     return (
-        <CharacterInfo
+        <LocationInfo
             id={id as string}
         />
     )
 }
 
-export default Character
+export default Location

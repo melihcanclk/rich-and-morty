@@ -2,7 +2,7 @@ import Banner from "@/assets/images/banner.png";
 import Banner2x from "@/assets/images/banner-2x.png";
 import BannerSm from "@/assets/images/banner-sm.png";
 import BannerSm2x from "@/assets/images/banner-sm-2x.png";
-import styles from "./index.module.scss";
+import styles from "@/components/Hero/Hero.module.scss";
 
 const Hero = () => (
     <picture>

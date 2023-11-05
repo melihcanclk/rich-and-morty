@@ -1,4 +1,4 @@
-import styles from "./Dropdown.module.scss";
+import styles from "@/components/Dropdown/Dropdown.module.scss";
 
 interface Props {
 	title: string;

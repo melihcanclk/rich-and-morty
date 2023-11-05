@@ -1,5 +1,5 @@
 
-import styles from "./Card.module.scss";
+import styles from "@/components/Cards/CharacterCard/CharacterCard.module.scss";
 import { lazyLoading } from "@/utils";
 import React from "react";
 import { Heart } from "@/assets/icons/Heart";
@@ -17,7 +17,6 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
     const dispatch = useDispatch();
     const favoriteCount = useSelector((state: any) => state.userSelections.favoriteCount);
     const imgRef = React.useRef<HTMLImageElement>(null);
-    console.log(character);
     React.useEffect(() => {
         if (imgRef.current) {
             lazyLoading(imgRef);
@@ -25,7 +24,7 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
     }, [character]);
 
 
-   const handleOnClickFavorite = (e: React.SyntheticEvent<EventTarget>) => {
+    const handleOnClickFavorite = (e: React.SyntheticEvent<EventTarget>) => {
         e.stopPropagation();
         e.preventDefault();
         // if character is favorite, open modal

@@ -1,4 +1,4 @@
-import { InfoModel } from "./InfoModel";
+import { InfoModel } from "@/types/InfoModel";
 export interface RequestModel {
   info: InfoModel;
   results: CharacterModel[];
@@ -13,6 +13,7 @@ export interface CharacterModel {
   image: string;
   location: {
     name: string;
+    url: string;
   };
   origin?: {
     name: string;

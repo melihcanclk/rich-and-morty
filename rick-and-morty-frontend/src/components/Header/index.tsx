@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./Header.module.scss";
+import styles from "@/components/Header/Header.module.scss";
 import { BiMenuAltRight } from "react-icons/bi";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 import { useSelector } from "react-redux";
@@ -11,7 +11,7 @@ const Header = () => {
     return (
         <div className={styles.header}>
             <div className={styles.header__content}>
-                
+
                 <div>
                     <nav className={`${styles.nav} ${menuOpen ? styles[`nav--open`] : {}}`}>
                         <a className={styles.nav__item} href={"/characters"}>
@@ -19,6 +19,9 @@ const Header = () => {
                         </a>
                         <a className={styles.nav__item} href={"/episodes"}>
                             Episodes
+                        </a>
+                        <a className={styles.nav__item} href={"/locations"}>
+                            Locations
                         </a>
                         <a className={styles.nav__item} href={"/favorites"}>
                             Favorites ({favoriteCount})

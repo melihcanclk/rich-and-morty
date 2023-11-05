@@ -1,2 +1,2 @@
-export type { CharacterModel, CharacterSearchModel } from './CharacterModel';
-export type { InfoModel } from './InfoModel';
+export type { CharacterModel, CharacterSearchModel } from '@/types/CharacterModel';
+export type { InfoModel } from '@/types/InfoModel';

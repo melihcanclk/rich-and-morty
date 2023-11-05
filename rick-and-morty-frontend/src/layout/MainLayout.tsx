@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./MainLayout.module.scss";
+import styles from "@/layout/MainLayout.module.scss";
 import imgError from "@/assets/images/error.jpg";
 import { Loader } from '@/assets/icons/Loader';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,4 +1,4 @@
-import styles from "./Controls.module.scss";
+import styles from "@/components/Controls/Controls.module.scss";
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown";
 import { resetFilters, setGender, setSearch, setSpecies, setStatus } from "@/features/slices/userSelectionsSlice";

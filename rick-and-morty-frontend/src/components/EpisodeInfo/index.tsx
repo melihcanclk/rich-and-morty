@@ -1,7 +1,7 @@
 import React from "react";
-import style from "./EpisodeInfo.module.scss"
+import style from "@/components/EpisodeInfo/EpisodeInfo.module.scss"
 import { EpisodeModel } from "@/types/EpisodeModel";
-import CharacterCSGrid from "../Grid/CharacterCSGrid";
+import CharacterCSGrid from "@/components/Grid/CharacterCSGrid";
 import { CharacterModel } from "@/types";
 import { BASE_URL } from "@/utils";
 import { useDispatch, useSelector } from "react-redux";
