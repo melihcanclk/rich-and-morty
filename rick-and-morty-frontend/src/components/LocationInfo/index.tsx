@@ -1,71 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "@/components/LocationInfo/LocationInfo.module.scss"
-import { CharacterModel } from "@/types";
 import Accordion from "@/components/Accordion";
-import { CHARACTER, LOCATION } from "@/utils/getCharacters";
+import { LOCATION } from "@/utils/getCharacters";
 import { LocationModel } from "@/types/LocationModel";
-import React from "react";
-import { lazyLoading } from "@/utils";
-
-const CharacterGrid = ({
-    characterId
-}: {
-    characterId: string;
-}) => {
-    // fetch character
-    const [character, setCharacter] = useState({} as CharacterModel);
-    const imgRef = React.useRef(null);
-    const fetchCharacter = async () => {
-        try {
-            const response = await fetch(`${CHARACTER}/${characterId}`);
-            const data = await response.json();
-            setCharacter(data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        // get character info from api
-        fetchCharacter();
-    }, [characterId]);
-
-    React.useEffect(() => {
-        if (imgRef.current) {
-            lazyLoading(imgRef);
-        }
-    }, [character]);
-
-    return (
-        <a
-            href={`/character/${characterId}`}
-            className={styles.gridInner}
-        >
-            <img
-                src={character.image}
-                alt={character.name}
-                className={styles.img}
-                width={150}
-                height={150}
-                ref={imgRef}
-            />
-
-            {`${character.name}`}
-        </a>
-    );
-}
-
-const GridContainer = ({
-    children
-}: {
-    children: React.ReactNode;
-}) => {
-    return (
-        <div className={styles.gridContainer}>
-            {children}
-        </div>
-    );
-}
+import { CharacterGridAccordion } from "./CharacterGridAccordion";
+import { GridContainer } from "@/components/LocationInfo/GridContainer";
 
 const LocationInfo = ({ id }: { id: string }) => {
 
@@ -115,7 +54,7 @@ const LocationInfo = ({ id }: { id: string }) => {
                         <GridContainer>
                             {locationInfo.residents?.map((character: any, key) => {
                                 const characterId = character.split("/").pop();
-                                return <CharacterGrid characterId={characterId} key={key} />;
+                                return <CharacterGridAccordion characterId={characterId} key={key} />;
                             })}
                         </GridContainer>
                     }

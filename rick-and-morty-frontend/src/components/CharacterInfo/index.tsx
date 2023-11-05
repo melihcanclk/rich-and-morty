@@ -6,70 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Heart } from "@/assets/icons/Heart";
 import { addFavourite, openModalError, openModalRemove } from "@/features/slices/userSelectionsSlice";
 import { PAGINATION_LIMIT } from "@/utils/constants";
-import { CHARACTER, LOCATION } from "@/utils/getCharacters";
-import { LocationModel } from "@/types/LocationModel";
+import { CHARACTER } from "@/utils/getCharacters";
 import React from "react";
 import { lazyLoading } from "@/utils";
+import { EpisodeGridAccordion } from "@/components/CharacterInfo/EpisodeGridAccordion";
+import { LocationsGridAccordion } from "@/components/CharacterInfo/LocationsGridAccordion";
+import { GridContainer } from "@/components/LocationInfo/GridContainer";
 
-const EpisodeGrid = ({
-    episode
-}: {
-    episode: string;
-}) => {
-    return (
-        <a
-            href={`/episode/${episode}`}
-            className={styles.gridInner}
-        >
-            {`Episode ${episode}`}
-        </a>
-    );
-}
-
-const LocationsGrid = ({
-    locationId
-}: {
-    locationId: string;
-}) => {
-
-    const [location, setLocation] = useState({} as LocationModel);
-
-    const fetchLocation = async () => {
-        try {
-            const response = await fetch(`${LOCATION}/${locationId}`);
-            const data = await response.json();
-            setLocation(data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        // get character info from api
-        fetchLocation();
-    }, [locationId]);
-
-    return (
-        <a
-            href={`/location/${locationId}`}
-            className={styles.gridInner}
-        >
-            {`${location.name}`}
-        </a>
-    );
-}
-
-const GridContainer = ({
-    children
-}: {
-    children: React.ReactNode;
-}) => {
-    return (
-        <div className={styles.gridContainer}>
-            {children}
-        </div>
-    );
-}
 
 const CharacterInfo = ({ id }: { id: string }) => {
 
@@ -192,7 +135,7 @@ const CharacterInfo = ({ id }: { id: string }) => {
                         <GridContainer>
                             {characterInfo.episode?.map((episode: any) => {
                                 episode = episode.split("/").pop();
-                                return <EpisodeGrid key={episode} episode={episode} />;
+                                return <EpisodeGridAccordion key={episode} episode={episode} />;
                             })}
                         </GridContainer>
                     }
@@ -203,7 +146,7 @@ const CharacterInfo = ({ id }: { id: string }) => {
                         <GridContainer>
                             {
                                 characterInfo.location?.url &&
-                                <LocationsGrid key={characterInfo.location?.url} locationId={characterInfo.location?.url.split("/").pop() ?? ""} />
+                                <LocationsGridAccordion key={characterInfo.location?.url} locationId={characterInfo.location?.url.split("/").pop() ?? ""} />
                             }
                         </GridContainer>
                     }
