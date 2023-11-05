@@ -8,6 +8,8 @@ import { addFavourite, openModalError, openModalRemove } from "@/features/slices
 import { PAGINATION_LIMIT } from "@/utils/constants";
 import { CHARACTER, LOCATION } from "@/utils/getCharacters";
 import { LocationModel } from "@/types/LocationModel";
+import React from "react";
+import { lazyLoading } from "@/utils";
 
 const EpisodeGrid = ({
     episode
@@ -73,6 +75,7 @@ const CharacterInfo = ({ id }: { id: string }) => {
 
     // display character info
     const [characterInfo, setCharacterInfo] = useState({} as CharacterModel);
+    const imgRef = React.useRef<HTMLImageElement>(null);
     const favorites: CharacterModel[] = useSelector((state: any) => state.userSelections.favorites);
     const favoriteCount = useSelector((state: any) => state.userSelections.favoriteCount);
     const dispatch = useDispatch();
@@ -92,6 +95,12 @@ const CharacterInfo = ({ id }: { id: string }) => {
         // get character info from api
         fetchCharacterInfo();
     }, [id]);
+
+    React.useEffect(() => {
+        if (imgRef.current) {
+            lazyLoading(imgRef);
+        }
+    }, [characterInfo]);
 
     const handleOnClickFavorite = (e: React.SyntheticEvent<EventTarget>) => {
         e.stopPropagation();
@@ -148,6 +157,7 @@ const CharacterInfo = ({ id }: { id: string }) => {
                         alt={characterInfo?.name}
                         width={200}
                         height={200}
+                        ref={imgRef}
                     />
                 </div>
                 <p>
