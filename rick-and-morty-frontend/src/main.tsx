@@ -16,22 +16,24 @@ import Location from '@/pages/Location/index.tsx'
 // TODO: COnvert them to relative paths
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <FiltersProvider>
-    <BrowserRouter>
-      <Header />
-      <MainLayout>
-        <Routes>
-          <Route path="/" element={<Episodes />} />
-          <Route path="/episodes" element={<Episodes />} />
-          <Route path='/episode/:id' element={<Episode />} />
-          <Route path='/characters' element={<Characters />} />
-          <Route path='/character/:id' element={<Character />} />
-          <Route path='/favorites' element={<Favorites />} />
-          <Route path='/locations' element={<Locations />} />
-          <Route path='/location/:id' element={<Location />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </MainLayout>
-    </BrowserRouter>
-  </FiltersProvider>
+  <React.StrictMode>
+    <FiltersProvider>
+      <BrowserRouter>
+        <Header />
+        <MainLayout>
+          <Routes>
+            <Route path="/" element={<Episodes />} />
+            <Route path="/episodes" element={<Episodes />} />
+            <Route path='/episode/:id' element={<Episode />} />
+            <Route path='/characters' element={<Characters />} />
+            <Route path='/character/:id' element={<Character />} />
+            <Route path='/favorites' element={<Favorites />} />
+            <Route path='/locations' element={<Locations />} />
+            <Route path='/location/:id' element={<Location />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </MainLayout>
+      </BrowserRouter>
+    </FiltersProvider>
+  </React.StrictMode>
 )
