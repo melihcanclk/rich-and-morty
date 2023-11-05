@@ -19,7 +19,9 @@ export interface CharacterModel {
     url: string;
   };
   type: string;
+  created: string;
   dimension?: string;
+  episode?: string[];
   originName?: string;
   isFavorite?: boolean;
   clickedFrom?: string;
