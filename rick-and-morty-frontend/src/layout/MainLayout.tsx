@@ -15,6 +15,14 @@ const MainLayout = ({
     const { loading, error, characterToBeRemoved, modalRemove, modalError } = useSelector((state: any) => state.userSelections);
     const dispatch = useDispatch();
 
+    const handleOnClickCloseRemove = () => {
+        dispatch(closeModalRemove());
+    }
+
+    const handleOnClickCloseError = () => {
+        dispatch(closeModalError());
+    }
+
     const handleOnClickRemove = () => {
         dispatch(closeModalRemove());
         dispatch(removeFavorite(characterToBeRemoved));
@@ -38,18 +46,25 @@ const MainLayout = ({
                     children={
                         <div >
                             <h2>Do you want to remove {characterToBeRemoved?.name} from favorites?</h2>
-                            <Button
-                                className={styles.remove_button}
-                                onClick={handleOnClickRemove}
-                            >
-                                <span>Remove from favorites</span>
-                            </Button>
+                            <div className={styles.buttons}>
+                                <Button
+                                    onClick={handleOnClickCloseRemove}
+                                >
+                                    <span>Cancel</span>
+                                </Button>
+                                <Button
+                                    className={styles.remove_button}
+                                    onClick={handleOnClickRemove}
+                                >
+                                    <span>Remove from favorites</span>
+                                </Button>
+                            </div>
                         </div>
                     }
                 />
                 <Modal
                     modal={modalError}
-                    closeModal={() => closeModalError()}
+                    closeModal={handleOnClickCloseError}
                     children={
                         <div >
                             <h2>
