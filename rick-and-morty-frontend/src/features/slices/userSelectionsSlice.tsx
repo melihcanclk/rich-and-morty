@@ -180,7 +180,7 @@ const userSelectionsSlice = createSlice({
         builder.addCase(fetchData.fulfilled, (state, action) => {
             state.characters = action.payload.results;
             // mark favorites
-            state.characters.map((c: CharacterModel) => {
+            state.characters?.map((c: CharacterModel) => {
                 if (state.favorites.some((f: CharacterModel) => f.id === c.id)) {
                     c.isFavorite = true;
                 } else {
