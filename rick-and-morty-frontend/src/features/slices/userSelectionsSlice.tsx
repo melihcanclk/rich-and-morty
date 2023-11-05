@@ -123,6 +123,19 @@ const userSelectionsSlice = createSlice({
             });
             localStorage.setItem("favorites", JSON.stringify(state.favorites));
         },
+        setCharacters(state, action) {
+            state.characters = action.payload;
+            // mark favorites
+            state.characters.map((c: CharacterModel) => {
+                if (state.favorites.some((f: CharacterModel) => f.id === c.id)) {
+                    c.isFavorite = true;
+                } else {
+                    c.isFavorite = false;
+                }
+                return c;
+            });
+
+        },
         setPageCharacters(state, action) {
             state.filters.page_characters = action.payload;
             localStorage.setItem("page", action.payload);
@@ -194,6 +207,7 @@ const userSelectionsSlice = createSlice({
 export const {
     addFavourite,
     removeFavorite,
+    setCharacters,
     setPageCharacters,
     setPageEpisodes,
     setSearch,
