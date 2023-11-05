@@ -55,15 +55,15 @@
   text-align: center;
   transition: all 0.3s ease-in-out;
 
-  @media (min-width: 815px) {
+  @media (min-width: 1015px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (min-width: 1027px) {
+  @media (min-width: 1427px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media (min-width: 1214px) {
+  @media (min-width: 1714px) {
     grid-template-columns: repeat(4, 1fr);
   }
 }

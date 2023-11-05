@@ -10,7 +10,6 @@ const CharacterGrid = ({
 }: {
     characterId: string;
 }) => {
-
     // fetch character
     const [character, setCharacter] = useState({} as CharacterModel);
     const fetchCharacter = async () => {
