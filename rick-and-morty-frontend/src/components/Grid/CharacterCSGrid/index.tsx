@@ -7,7 +7,6 @@ interface Props {
 }
 
 const CharacterCSGrid = ({ characters }: Props) => {
-	console.log(characters);
 
 	return (
 		<Grid>

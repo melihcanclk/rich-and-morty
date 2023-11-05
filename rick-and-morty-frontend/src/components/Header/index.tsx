@@ -18,15 +18,15 @@ const Header = () => {
                 <div>
                     <nav className={`${styles.nav} ${menuOpen ? styles[`nav--open`] : {}}`}>
                         <a className={styles.nav__item} href={"/all-characters"}>
-                            All Characters
+                            Characters
                         </a>
                         <a className={styles.nav__item} href={"/"}>
-                            Page Two
+                            Episodes
                         </a>
                         <a className={styles.nav__item} href={"/"}>
                             Page Three
                         </a>
-                        <div className={styles.nav__button__container}>
+                        {/* <div className={styles.nav__button__container}>
                             <Button
                                 onClick={() => {
                                     console.log("Contact");
@@ -34,11 +34,11 @@ const Header = () => {
                             >
                                 Contact
                             </Button>
-                        </div>
+                        </div> */}
                     </nav>
                 </div>
                 <div>
-                    <div className={styles.header__button__container}>
+                    {/* <div className={styles.header__button__container}>
                         <Button
                             onClick={() => {
                                 console.log("Contact");
@@ -46,7 +46,7 @@ const Header = () => {
                         >
                             Contact
                         </Button>
-                    </div>
+                    </div> */}
                     <button className={styles.header__toggler} onClick={menuToggler}>
                         {!menuOpen ? <BiMenuAltRight /> : <AiOutlineCloseSquare />}
                     </button>
