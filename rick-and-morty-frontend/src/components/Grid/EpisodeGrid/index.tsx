@@ -4,7 +4,7 @@ import Grid from "@/components/Grid";
 import { EpisodeModel } from "@/types/EpisodeModel";
 import EpisodeCard from "@/components/Cards/EpisodeCard";
 
-const CharacterGrid = () => {
+const EpisodeGrid = () => {
 	const { episodes } = useSelector((state: RootState) => state.userSelections);
 
 	return (
@@ -16,4 +16,4 @@ const CharacterGrid = () => {
 	);
 };
 
-export default CharacterGrid;
+export default EpisodeGrid;

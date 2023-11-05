@@ -16,7 +16,6 @@ const Characters = () => {
         <div>
             <Hero />
             <Controls />
-
             <CharacterGrid />
             <Pagination
                 filters={filters}

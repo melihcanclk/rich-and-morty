@@ -1,23 +1,18 @@
-import { fetchData } from "@/features/slices/userSelectionsSlice";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import Button from "@/components/Button";
 import PaginationInput from "@/components/PaginationInput";
-import styles from "./Pagination.module.scss";
+import styles from "./PaginationCS.module.scss";
 import { InfoModel } from "@/types";
 
 interface Props {
-    filters?: any;
-    page: number;
-    setPage: (page: number) => void;
+    input: number;
+    setInput: (page: number) => void;
     info: InfoModel;
 }
 
-const Pagination = (
-    { filters, page, setPage, info }: Props
+const PaginationCS = (
+    { input, setInput, info }: Props
 ) => {
-    const dispatch = useDispatch<any>();
-    const [input, setInput] = React.useState(page);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.value || Number(e.target.value) < 1) {
@@ -33,33 +28,28 @@ const Pagination = (
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            dispatch(setPage(input));
+            setInput(e.currentTarget.valueAsNumber);
         }
     };
 
     const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-        setPage(Number(e.currentTarget.value));
+        setInput(Number(e.currentTarget.value));
     };
 
     const handlePrev = () => {
-        if (page === 1) return;
-        dispatch(setPage(page - 1));
-        setInput(page - 1);
+        if (input === 1) return;
+        setInput(input - 1);
     };
 
     const handleNext = () => {
-        dispatch(setPage(page + 1));
-        setInput(page + 1);
+        setInput(input + 1);
     };
 
     React.useEffect(() => {
-        setInput(page > (info?.pages ?? 1) ? info?.pages ?? 1 : page);
+        setInput(input > (info?.pages ?? 1) ? info?.pages ?? 1 : input);
 
-    }, [page, info?.pages]);
+    }, [input, info?.pages]);
 
-    useEffect(() => {
-        dispatch(fetchData(filters as any))
-    }, [dispatch, filters]);
 
     return (
         <div className={styles.pagination}>
@@ -86,5 +76,5 @@ const Pagination = (
     );
 };
 
-export default Pagination;
+export default PaginationCS;
 
