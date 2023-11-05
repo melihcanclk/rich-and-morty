@@ -11,6 +11,7 @@ import Characters from './pages/Characters/index.tsx'
 import Favorites from './pages/Favorites/index.tsx'
 import MainLayout from './layout/MainLayout.tsx'
 import Episodes from './pages/Home/index.tsx'
+import Locations from './pages/Locations/index.tsx'
 // TODO: COnvert them to relative paths
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -26,6 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path='/characters' element={<Characters />} />
             <Route path='/character/:id' element={<Character />} />
             <Route path='/favorites' element={<Favorites />} />
+            <Route path='/locations' element={<Locations />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MainLayout>

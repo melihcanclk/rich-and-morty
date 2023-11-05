@@ -1,0 +1,25 @@
+@use "@/styles/variables.scss";
+
+.location {
+  border: none;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background-color: variables.$bg-color;
+  color: variables.$main-color;
+  font-family: variables.$font;
+  font-size: variables.$fz-sm;
+  border: 1px solid variables.$main-color;
+
+  .info{
+    display: 'flex';
+    flex-direction: 'column';
+    justify-content: 'center';
+    align-items: 'center';
+  }
+}

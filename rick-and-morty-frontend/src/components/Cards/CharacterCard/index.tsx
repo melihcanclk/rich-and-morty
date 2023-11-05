@@ -1,5 +1,5 @@
 
-import styles from "./Card.module.scss";
+import styles from "./CharacterCard.module.scss";
 import { lazyLoading } from "@/utils";
 import React from "react";
 import { Heart } from "@/assets/icons/Heart";

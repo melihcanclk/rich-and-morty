@@ -1,16 +1,18 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "@/store/store";
 import { CharacterModel, InfoModel } from "@/types";
 import { getLocalStorage } from "@/utils/getLocalStorage";
-import { CHARACTER, EPISODE } from "@/utils/getCharacters";
+import { CHARACTER, EPISODE, LOCATION } from "@/utils/getCharacters";
 import { EpisodeModel } from "@/types/EpisodeModel";
+import { LocationModel } from "@/types/LocationModel";
 
 type UserSelectionsState = {
     characters: CharacterModel[],
     characterToBeRemoved: CharacterModel | null,
     episodes: EpisodeModel[],
+    locations: LocationModel[],
     info_characters: InfoModel,
     info_episodes: InfoModel,
+    info_locations: InfoModel,
     error: string,
     loading: boolean,
     modalRemove: boolean,
@@ -25,6 +27,7 @@ type UserSelectionsState = {
 type Filter = {
     page_characters: number;
     page_episodes: number;
+    page_locations: number;
     search: string;
     status: string;
     species: string;
@@ -35,6 +38,7 @@ type Filter = {
 const initialStateFilter = {
     page_characters: Number(getLocalStorage("page_characters", "1")),
     page_episodes: Number(getLocalStorage("page_episodes", "1")),
+    page_locations: Number(getLocalStorage("page_locations", "1")),
     status: getLocalStorage("status", ""),
     species: getLocalStorage("species", ""),
     gender: getLocalStorage("gender", "")
@@ -49,6 +53,9 @@ const { info: info_characters, results: characters, error } = await fetch(`${CHA
 
 if (initialStateFilter.page_episodes) query.set("page", initialStateFilter.page_episodes.toString());
 const { info: info_episodes, results: episodes } = await fetch(`${EPISODE}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
+
+if (initialStateFilter.page_locations) query.set("page", initialStateFilter.page_locations.toString());
+const { info: info_locations, results: locations } = await fetch(`${LOCATION}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
 
 const initialFavorites = getLocalStorage(
     "favorites",
@@ -80,7 +87,21 @@ export const fetchData = createAsyncThunk(
         if (filters.page_episodes) query2.set("page", filters.page_episodes.toString());
         const { info: info_episodes, results: episodes } = await fetch(`${EPISODE}?${query2}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
 
-        return { info_characters, results, info_episodes, episodes, error };
+
+        const query3 = new URLSearchParams();
+        if (filters.page_locations) query3.set("page", filters.page_locations.toString());
+        const { info: info_locations, results: locations } = await fetch(`${LOCATION}?${query3}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
+
+        return {
+            info_characters,
+            info_episodes,
+            info_locations,
+            results,
+            episodes,
+            locations,
+            error
+        };
+
     }
 );
 
@@ -89,8 +110,10 @@ const initialState = {
     characters: characters as CharacterModel[],
     characterToBeRemoved: null as CharacterModel | null,
     episodes: episodes as EpisodeModel[],
+    locations: locations as LocationModel[],
     info_characters: info_characters as InfoModel,
     info_episodes: info_episodes as InfoModel,
+    info_locations: info_locations as InfoModel,
     error: error as string,
     loading: false,
     modalRemove: false as boolean,
@@ -153,6 +176,10 @@ const userSelectionsSlice = createSlice({
         },
         setPageEpisodes(state, action) {
             state.filters.page_episodes = action.payload;
+            localStorage.setItem("page", action.payload);
+        },
+        setPageLocations(state, action) {
+            state.filters.page_locations = action.payload;
             localStorage.setItem("page", action.payload);
         },
         setSearch(state, action) {
@@ -221,8 +248,10 @@ const userSelectionsSlice = createSlice({
             });
 
             state.episodes = action.payload.episodes;
+            state.locations = action.payload.locations;
             state.info_characters = action.payload.info_characters;
             state.info_episodes = action.payload.info_episodes;
+            state.info_locations = action.payload.info_locations;
             state.error = action.payload.error;
             state.loading = false;
 
@@ -241,6 +270,7 @@ export const {
     setCharacters,
     setPageCharacters,
     setPageEpisodes,
+    setPageLocations,
     setSearch,
     setStatus,
     setSpecies,
