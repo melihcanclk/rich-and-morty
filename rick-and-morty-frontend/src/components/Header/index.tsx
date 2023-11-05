@@ -20,6 +20,9 @@ const Header = () => {
                         <a className={styles.nav__item} href={"/episodes"}>
                             Episodes
                         </a>
+                        <a className={styles.nav__item} href={"/locations"}>
+                            Locations
+                        </a>
                         <a className={styles.nav__item} href={"/favorites"}>
                             Favorites ({favoriteCount})
                         </a>

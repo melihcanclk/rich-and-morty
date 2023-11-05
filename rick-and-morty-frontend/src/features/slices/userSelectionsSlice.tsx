@@ -5,6 +5,7 @@ import { CHARACTER, EPISODE, LOCATION } from "@/utils/getCharacters";
 import { EpisodeModel } from "@/types/EpisodeModel";
 import { LocationModel } from "@/types/LocationModel";
 
+// TODO: make info collection
 type UserSelectionsState = {
     characters: CharacterModel[],
     characterToBeRemoved: CharacterModel | null,

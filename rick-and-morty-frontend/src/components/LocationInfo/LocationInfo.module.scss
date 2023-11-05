@@ -1,6 +1,6 @@
 @use "@/styles/variables.scss";
 
-.characterInfo {
+.locationInfo {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -23,7 +23,7 @@
   }
 }
 
-.episodes {
+.residents {
   align-self: flex-start;
   padding: 1rem;
   background-color: variables.$bg-color;

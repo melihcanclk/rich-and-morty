@@ -13,6 +13,7 @@ export interface CharacterModel {
   image: string;
   location: {
     name: string;
+    url: string;
   };
   origin?: {
     name: string;

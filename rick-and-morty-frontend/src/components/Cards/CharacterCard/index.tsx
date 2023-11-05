@@ -17,7 +17,6 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
     const dispatch = useDispatch();
     const favoriteCount = useSelector((state: any) => state.userSelections.favoriteCount);
     const imgRef = React.useRef<HTMLImageElement>(null);
-    console.log(character);
     React.useEffect(() => {
         if (imgRef.current) {
             lazyLoading(imgRef);

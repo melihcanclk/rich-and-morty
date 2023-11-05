@@ -1,18 +1,16 @@
-import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useRef, useState } from "react";
+import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useRef, useState } from "react";
 import "./Accordion.css";
 
 function Accordion(props: { title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; content: any; }) {
     const [active, setActive] = useState(false);
-    const content = useRef(null);
+    const content = useRef<HTMLDivElement>(null);
     const [height, setHeight] = useState("0px");
-
-    useEffect(() => {
-        console.log("Height for ", props.title, ": ", height);
-    }, [height]);
 
     function toggleAccordion() {
         setActive(!active);
-        setHeight(active ? "0px" : `${content.current.scrollHeight}px`);
+        setHeight(active ? "0px" : `${content.current !== null &&
+            content.current !== undefined &&
+            content.current.scrollHeight !== undefined ? content.current.scrollHeight : 0}px`);
     }
 
     return (
