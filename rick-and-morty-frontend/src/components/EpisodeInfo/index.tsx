@@ -6,11 +6,14 @@ import { CharacterModel } from "@/types";
 import { BASE_URL } from "@/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { setCharacters, setPageCharacters } from "@/features/slices/userSelectionsSlice";
+import { setCharacters } from "@/features/slices/userSelectionsSlice";
+import { getEpisode } from "@/utils/getSeason";
 
 const EpisodeInfo = ({ id }: { id: string }) => {
 
     const [episode, setEpisode] = React.useState<EpisodeModel>({} as EpisodeModel);
+    const [season, setSeason] = React.useState<string>("");
+    const [episodeNumber, setEpisodeNumber] = React.useState<string>("");
     const userSelections = useSelector((state: RootState) => state.userSelections);
     const dispatch = useDispatch();
 
@@ -32,8 +35,14 @@ const EpisodeInfo = ({ id }: { id: string }) => {
         }
     }, [episode]);
 
-    const season = episode.episode?.split("E")[0].split("S")[1];
-    const episodeNumber = episode.episode?.split("E")[1];
+    React.useEffect(() => {
+        if (episode.episode) {
+            const { season, episode: episodeNumber } = getEpisode(episode.episode);
+            setSeason(season.toString());
+            setEpisodeNumber(episodeNumber.toString());
+        }
+    }, [episode]);
+
 
     return (
         <div className={style.episodeInfo}>

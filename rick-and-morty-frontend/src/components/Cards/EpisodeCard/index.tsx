@@ -2,12 +2,15 @@
 import styles from "./EpisodeCard.module.scss";
 import React from "react";
 import { EpisodeModel } from "@/types/EpisodeModel";
+import { getEpisode } from "@/utils/getSeason";
 
 interface Props {
     episode: EpisodeModel;
 }
 
 const EpisodeCard: React.FC<Props> = ({ episode }) => {
+    const { season, episode: episodeNumber } = getEpisode(episode.episode);
+
     return (
         <div>
             <a
@@ -31,7 +34,9 @@ const EpisodeCard: React.FC<Props> = ({ episode }) => {
                     <br />
                     Episode Air Date: {episode.air_date}
                     <br />
-                    Episode Code: {episode.episode}
+                    Season: {season}
+                    <br />
+                    Episode: {episodeNumber}
                     <br />
                 </div>
             </a>
