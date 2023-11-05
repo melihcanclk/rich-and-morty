@@ -24,7 +24,7 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
     }, [character]);
 
 
-    const handleOnClickFavorite = (e: React.SyntheticEvent<EventTarget>) => {
+   const handleOnClickFavorite = (e: React.SyntheticEvent<EventTarget>) => {
         e.stopPropagation();
         e.preventDefault();
         // if character is favorite, open modal
