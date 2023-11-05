@@ -31,15 +31,14 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
             dispatch(addFavourite(character));
     };
 
-
     return (
         <div>
-            <button
+            <a
                 id={`character-${character?.id}`}
                 key={character?.id}
                 className={`${styles.character} skeleton`}
                 title={`See details of ${character?.name}`}
-                type="button"
+                href={`/character/${character?.id}`}
             >
                 {character?.image &&
                     (character?.isFavorite ? (
@@ -80,9 +79,9 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
                     {character?.status} - {character?.species} - {character?.gender}
                 </p>
                 {character?.image && <p className={styles.name}>{character.name}</p>}
-            </button >
+            </a >
 
-        </div>
+        </div >
     );
 };
 

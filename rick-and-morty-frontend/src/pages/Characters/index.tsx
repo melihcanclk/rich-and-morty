@@ -10,7 +10,7 @@ import { setPageCharacters } from '@/features/slices/userSelectionsSlice';
 
 const CharacterGrid = React.lazy(() => import("@/components/Grid/CharacterGrid"));
 
-const AllCharacters = () => {
+const Characters = () => {
 
     const { loading, error } = useSelector((state: any) => state.userSelections);
     const filters = useSelector((state: any) => state.userSelections.filters);
@@ -41,4 +41,4 @@ const AllCharacters = () => {
     )
 }
 
-export default AllCharacters
+export default Characters
