@@ -1,5 +1,3 @@
-import Popover from '@/components/Popover'
-import errorImage from '@/assets/images/error.jpg'
 import React from 'react'
 import styles from "@/styles/Home.module.scss";
 import Hero from '../../components/Hero'
@@ -8,34 +6,17 @@ import Controls from '@/components/Controls';
 import { Loader } from '@/assets/icons/Loader';
 import Pagination from '@/components/Pagination';
 import { useSelector } from 'react-redux';
+import { setPageCharacters } from '@/features/slices/userSelectionsSlice';
 
-const CharacterGrid = React.lazy(() => import("@/components/CharacterGrid"));
+const CharacterGrid = React.lazy(() => import("@/components/Grid/CharacterGrid"));
 
 const AllCharacters = () => {
 
     const { loading, error } = useSelector((state: any) => state.userSelections);
+    const filters = useSelector((state: any) => state.userSelections.filters);
+    const info_characters = useSelector((state: any) => state.userSelections.info_characters);
 
     return (
-        // <div
-        //     style={{
-        //         display: 'flex',
-        //         justifyContent: 'center',
-        //         alignItems: 'center',
-        //         height: '100vh',
-        //     }}
-        // >
-        //     <Popover
-        //         triggerText="Characters"
-        //         content={
-        //             <img
-        //                 src={errorImage}
-        //                 alt="Error"
-        //                 style={{ width: '300px' }}
-        //             />
-        //         }
-        //     />
-        // </div>
-
         <main >
             <div className={styles.main}>
                 <Hero />
@@ -48,7 +29,12 @@ const AllCharacters = () => {
                         </div>
                     )}
                     <CharacterGrid />
-                    <Pagination />
+                    <Pagination
+                        filters={filters}
+                        page={filters.page_characters}
+                        setPage={setPageCharacters}
+                        info={info_characters}
+                    />
                 </React.Suspense>
             </div>
         </main>

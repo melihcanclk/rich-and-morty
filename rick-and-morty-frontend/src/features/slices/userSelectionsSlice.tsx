@@ -2,12 +2,14 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/store/store";
 import { CharacterModel, InfoModel } from "@/types";
 import { getLocalStorage } from "@/utils/getLocalStorage";
-import { CHARACTER } from "@/utils/getCharacters";
+import { CHARACTER, EPISODE } from "@/utils/getCharacters";
+import { EpisodeModel } from "@/types/EpisodeModel";
 
 type UserSelectionsState = {
     characters: CharacterModel[],
-    character: CharacterModel,
-    info: InfoModel,
+    episodes: EpisodeModel[],
+    info_characters: InfoModel,
+    info_episodes: InfoModel,
     error: string,
     loading: boolean,
     modal: boolean,
@@ -18,7 +20,8 @@ type UserSelectionsState = {
 };
 
 type Filter = {
-    page: number;
+    page_characters: number;
+    page_episodes: number;
     search: string;
     status: string;
     species: string;
@@ -27,19 +30,22 @@ type Filter = {
 
 // init state
 const initialStateFilter = {
-    page: parseInt(getLocalStorage("page", 1)),
+    page_characters: Number(getLocalStorage("page_characters", "1")),
+    page_episodes: Number(getLocalStorage("page_episodes", "1")),
     status: getLocalStorage("status", ""),
     species: getLocalStorage("species", ""),
     gender: getLocalStorage("gender", "")
 } as Filter;
 
 const query = new URLSearchParams();
-if (initialStateFilter.page) query.set("page", initialStateFilter.page.toString());
+if (initialStateFilter.page_characters) query.set("page", initialStateFilter.page_characters.toString());
 if (initialStateFilter.search) query.set("name", initialStateFilter.search);
 if (initialStateFilter.status) query.set("status", initialStateFilter.status);
 if (initialStateFilter.species) query.set("species", initialStateFilter.species);
-const { info, results, error } = await fetch(`${CHARACTER}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
+const { info: info_characters, results: characters, error } = await fetch(`${CHARACTER}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
 
+if (initialStateFilter.page_episodes) query.set("page", initialStateFilter.page_episodes.toString());
+const { info: info_episodes, results: episodes } = await fetch(`${EPISODE}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
 const initialModal = getLocalStorage(
     "modal",
     JSON.stringify(false)
@@ -51,7 +57,7 @@ const initialFavorites = getLocalStorage(
 );
 
 // mark favorites
-results.map((c: CharacterModel) => {
+characters.map((c: CharacterModel) => {
     if (initialFavorites.some((f: CharacterModel) => f.id === c.id)) {
         c.isFavorite = true;
     } else {
@@ -64,28 +70,29 @@ export const fetchData = createAsyncThunk(
     "userSelections/fetchData",
     async (filters: Filter) => {
         const query = new URLSearchParams();
-        if (filters.page) query.set("page", filters.page.toString());
+        if (filters.page_characters) query.set("page", filters.page_characters.toString());
         if (filters.search) query.set("name", filters.search);
         if (filters.status) query.set("status", filters.status);
         if (filters.species) query.set("species", filters.species);
         if (filters.gender) query.set("gender", filters.gender);
-        const { info, results, error } = await fetch(`${CHARACTER}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
-        if (results) {
-            // return { info, results, error };
-            return { info, results, error };
-        } else {
-            return { info, results: [], error };
-        }
+        const { info: info_characters, results, error } = await fetch(`${CHARACTER}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
+
+        const query2 = new URLSearchParams();
+        if (filters.page_episodes) query2.set("page", filters.page_episodes.toString());
+        const { info: info_episodes, results: episodes } = await fetch(`${EPISODE}?${query2}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
+
+        return { info_characters, results, info_episodes, episodes, error };
     }
 );
 
 // init state
 const initialState = {
-    characters: results as CharacterModel[],
-    info: info as InfoModel,
+    characters: characters as CharacterModel[],
+    episodes: episodes as EpisodeModel[],
+    info_characters: info_characters as InfoModel,
+    info_episodes: info_episodes as InfoModel,
     error: error as string,
     loading: false,
-    character: {} as CharacterModel,
     modal: initialModal as boolean,
     favorites: initialFavorites as CharacterModel[],
     filters: initialStateFilter,
@@ -116,8 +123,12 @@ const userSelectionsSlice = createSlice({
             });
             localStorage.setItem("favorites", JSON.stringify(state.favorites));
         },
-        setPage(state, action) {
-            state.filters.page = action.payload;
+        setPageCharacters(state, action) {
+            state.filters.page_characters = action.payload;
+            localStorage.setItem("page", action.payload);
+        },
+        setPageEpisodes(state, action) {
+            state.filters.page_episodes = action.payload;
             localStorage.setItem("page", action.payload);
         },
         setSearch(state, action) {
@@ -136,12 +147,14 @@ const userSelectionsSlice = createSlice({
             localStorage.setItem("gender", action.payload)
         },
         resetFilters(state) {
-            state.filters.page = 1;
+            state.filters.page_characters = 1;
+            state.filters.page_episodes = 1;
             state.filters.gender = "";
             state.filters.species = "";
             state.filters.status = "";
             // set localStorage
-            localStorage.setItem("page", "1");
+            localStorage.setItem("page_characters", "1");
+            localStorage.setItem("page_episodes", "1");
             localStorage.setItem("status", "");
             localStorage.setItem("species", "");
             localStorage.setItem("gender", "");
@@ -162,22 +175,27 @@ const userSelectionsSlice = createSlice({
                 }
                 return c;
             });
-            state.info = action.payload.info;
+
+            state.episodes = action.payload.episodes;
+            state.info_characters = action.payload.info_characters;
+            state.info_episodes = action.payload.info_episodes;
             state.error = action.payload.error;
             state.loading = false;
+
         });
         builder.addCase(fetchData.rejected, (state, action) => {
             state.error = action.error.message ?? "";
             state.loading = false;
         });
-    }
+    },
 });
 
 
 export const {
     addFavourite,
     removeFavorite,
-    setPage,
+    setPageCharacters,
+    setPageEpisodes,
     setSearch,
     setStatus,
     setSpecies,
@@ -186,8 +204,9 @@ export const {
 } = userSelectionsSlice.actions;
 
 export const selectCharacters = (state: RootState) => state.userSelections.characters;
-export const selectCharacter = (state: RootState) => state.userSelections.character;
-export const selectInfo = (state: RootState) => state.userSelections.info;
+export const selectEpisodes = (state: RootState) => state.userSelections.episodes;
+export const selectInfoCharacters = (state: RootState) => state.userSelections.info_characters;
+export const selectInfoEpisodes = (state: RootState) => state.userSelections.info_episodes;
 export const selectError = (state: RootState) => state.userSelections.error;
 export const selectLoading = (state: RootState) => state.userSelections.loading;
 export const selectModal = (state: RootState) => state.userSelections.modal;

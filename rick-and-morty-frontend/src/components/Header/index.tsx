@@ -11,7 +11,9 @@ const Header = () => {
         <div className={styles.header}>
             <div className={styles.header__content}>
                 <div>
-                    <span className={styles.logo}>R&M App</span>
+                    <span className={styles.logo}>
+                        <a href="/">R&M App</a>
+                    </span>
                 </div>
                 <div>
                     <nav className={`${styles.nav} ${menuOpen ? styles[`nav--open`] : {}}`}>

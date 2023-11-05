@@ -63,9 +63,11 @@
 }
 
 .logo {
-  font-size: 26px;
-  font-weight: 700;
-  color: variables.$header-text-color2;
+  a {
+    font-size: 26px;
+    font-weight: 700;
+    color: variables.$header-text-color2;
+  }
 }
 
 .nav {

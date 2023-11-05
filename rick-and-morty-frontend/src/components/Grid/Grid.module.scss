@@ -1,9 +1,9 @@
 @use "@/styles/variables.scss";
 
-.characters {
+.grid {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
   margin: 0 auto;
   max-width: variables.$max-width;
   padding: 2rem 0;

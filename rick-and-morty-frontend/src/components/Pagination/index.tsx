@@ -1,19 +1,27 @@
-import { fetchData, setPage } from "@/features/slices/userSelectionsSlice";
+import { fetchData } from "@/features/slices/userSelectionsSlice";
 import { RootState } from "@/store/store";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@/components/Button";
 import PaginationInput from "@/components/Pagination/PaginationInput";
 import styles from "./Pagination.module.scss";
+import { InfoModel } from "@/types";
 
-const Pagination = () => {
-    const filters = useSelector((state: RootState) => state.userSelections.filters);
-    const info = useSelector((state: RootState) => state.userSelections.info);
+interface Props {
+    filters: any;
+    page: number;
+    setPage: (page: number) => void;
+    info: InfoModel;
+}
+
+const Pagination = (
+    { filters, page, setPage, info }: Props
+) => {
     const dispatch = useDispatch<any>();
-    const [input, setInput] = React.useState(filters.page);
+    const [input, setInput] = React.useState(page);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.value) {
+        if (!e.target.value || Number(e.target.value) < 1) {
             setInput(1);
             return;
         }
@@ -35,23 +43,23 @@ const Pagination = () => {
     };
 
     const handlePrev = () => {
-        if (filters.page === 1) return;
-        dispatch(setPage(filters.page - 1));
-        setInput(filters.page - 1);
+        if (page === 1) return;
+        dispatch(setPage(page - 1));
+        setInput(page - 1);
     };
 
     const handleNext = () => {
-        dispatch(setPage(filters.page + 1));
-        setInput(filters.page + 1);
+        dispatch(setPage(page + 1));
+        setInput(page + 1);
     };
 
     React.useEffect(() => {
-        setInput(filters.page > (info?.pages ?? 1) ? info?.pages ?? 1 : filters.page);
+        setInput(page > (info?.pages ?? 1) ? info?.pages ?? 1 : page);
 
-    }, [filters.page, info?.pages]);
+    }, [page, info?.pages]);
 
     useEffect(() => {
-        dispatch(fetchData(filters))
+        dispatch(fetchData(filters as any))
     }, [dispatch, filters]);
 
     return (

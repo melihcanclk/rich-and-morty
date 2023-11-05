@@ -11,7 +11,7 @@ interface Props {
     character: CharacterModel;
 }
 
-const Card: React.FC<Props> = ({ character }) => {
+const CharacterCard: React.FC<Props> = ({ character }) => {
     const dispatch = useDispatch();
     const imgRef = React.useRef<HTMLImageElement>(null);
 
@@ -70,4 +70,4 @@ const Card: React.FC<Props> = ({ character }) => {
     );
 };
 
-export default Card;
+export default CharacterCard;
