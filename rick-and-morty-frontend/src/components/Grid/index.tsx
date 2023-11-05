@@ -1,4 +1,4 @@
-import styles from "./Grid.module.scss";
+import styles from "@/components/Grid/Grid.module.scss";
 
 const Grid = ({ children }: { children: React.ReactNode }) => {
 

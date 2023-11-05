@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./PaginationInput.module.scss";
+import styles from "@/components/PaginationInput/PaginationInput.module.scss";
 
 interface Props {
 	value: number;

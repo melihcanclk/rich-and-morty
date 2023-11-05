@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./Modal.module.scss";
+import styles from "@/components/Modal/Modal.module.scss";
 
 import { Close } from "@/assets/icons/Close";
 

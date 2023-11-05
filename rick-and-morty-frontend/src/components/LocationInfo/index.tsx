@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./LocationInfo.module.scss"
+import styles from "@/components/LocationInfo/LocationInfo.module.scss"
 import { CharacterModel } from "@/types";
 import Accordion from "@/components/Accordion";
 import { CHARACTER, LOCATION } from "@/utils/getCharacters";

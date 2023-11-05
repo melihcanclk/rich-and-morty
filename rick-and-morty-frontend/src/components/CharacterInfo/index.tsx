@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./CharacterInfo.module.scss"
+import styles from "@/components/CharacterInfo/CharacterInfo.module.scss"
 import { CharacterModel } from "@/types";
 import Accordion from "@/components/Accordion";
 import { useDispatch, useSelector } from "react-redux";

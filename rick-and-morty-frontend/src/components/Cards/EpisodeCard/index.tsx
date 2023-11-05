@@ -1,5 +1,5 @@
 
-import styles from "./EpisodeCard.module.scss";
+import styles from "@/components/Cards/EpisodeCard/EpisodeCard.module.scss"
 import React from "react";
 import { EpisodeModel } from "@/types/EpisodeModel";
 import { getEpisode } from "@/utils/getSeason";

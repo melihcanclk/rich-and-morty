@@ -1,4 +1,4 @@
-import { InfoModel } from "./InfoModel";
+import { InfoModel } from "@/types/InfoModel";
 export interface RequestModel {
   info: InfoModel;
   results: CharacterModel[];

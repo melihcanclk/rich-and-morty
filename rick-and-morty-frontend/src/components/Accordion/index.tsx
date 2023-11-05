@@ -1,5 +1,5 @@
 import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useRef, useState } from "react";
-import "./Accordion.css";
+import "@/components/Accordion/Accordion.css";
 
 function Accordion(props: { title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; content: any; }) {
     const [active, setActive] = useState(false);

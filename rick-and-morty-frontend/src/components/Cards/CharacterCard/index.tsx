@@ -1,5 +1,5 @@
 
-import styles from "./CharacterCard.module.scss";
+import styles from "@/components/Cards/CharacterCard/CharacterCard.module.scss";
 import { lazyLoading } from "@/utils";
 import React from "react";
 import { Heart } from "@/assets/icons/Heart";
@@ -24,7 +24,7 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
     }, [character]);
 
 
-   const handleOnClickFavorite = (e: React.SyntheticEvent<EventTarget>) => {
+    const handleOnClickFavorite = (e: React.SyntheticEvent<EventTarget>) => {
         e.stopPropagation();
         e.preventDefault();
         // if character is favorite, open modal

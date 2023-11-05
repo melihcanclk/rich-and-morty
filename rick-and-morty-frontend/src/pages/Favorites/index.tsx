@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import style from './Favorites.module.scss';
+import style from '@/pages/Favorites/Favorites.module.scss';
 import CharacterCSGrid from "@/components/Grid/CharacterCSGrid";
 
 const Favorites = () => {

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@/components/Button";
 import PaginationInput from "@/components/PaginationInput";
-import styles from "./Pagination.module.scss";
+import styles from "@/components/Pagination/Pagination.module.scss";
 import { InfoModel } from "@/types";
 
 interface Props {

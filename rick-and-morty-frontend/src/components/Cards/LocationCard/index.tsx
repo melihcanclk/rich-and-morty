@@ -1,5 +1,5 @@
 
-import styles from "./LocationCard.module.scss";
+import styles from "@/components/Cards/LocationCard/LocationCard.module.scss";
 import React from "react";
 import { LocationModel } from "@/types/LocationModel";
 

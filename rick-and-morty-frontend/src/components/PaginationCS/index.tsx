@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@/components/Button";
 import PaginationInput from "@/components/PaginationInput";
-import styles from "./PaginationCS.module.scss";
+import styles from "@/components/PaginationCS/PaginationCS.module.scss";
 import { InfoModel } from "@/types";
 
 interface Props {

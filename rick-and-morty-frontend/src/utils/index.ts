@@ -1,3 +1,2 @@
-export { getDimension } from './getDimension.ts';
-export { lazyLoading } from './lazyLoading.ts';
-export { BASE_URL } from './constants.ts';
+export { lazyLoading } from '@/utils/lazyLoading.ts';
+export { BASE_URL } from '@/utils/constants.ts';
