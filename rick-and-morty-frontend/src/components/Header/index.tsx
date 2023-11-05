@@ -17,14 +17,14 @@ const Header = () => {
                 </div>
                 <div>
                     <nav className={`${styles.nav} ${menuOpen ? styles[`nav--open`] : {}}`}>
-                        <a className={styles.nav__item} href={"/all-characters"}>
+                        <a className={styles.nav__item} href={"/characters"}>
                             Characters
                         </a>
                         <a className={styles.nav__item} href={"/"}>
                             Episodes
                         </a>
-                        <a className={styles.nav__item} href={"/"}>
-                            Page Three
+                        <a className={styles.nav__item} href={"/favorites"}>
+                            Favorites
                         </a>
                         {/* <div className={styles.nav__button__container}>
                             <Button
