@@ -7,14 +7,17 @@ import { EpisodeModel } from "@/types/EpisodeModel";
 
 type UserSelectionsState = {
     characters: CharacterModel[],
+    characterToBeRemoved: CharacterModel | null,
     episodes: EpisodeModel[],
     info_characters: InfoModel,
     info_episodes: InfoModel,
     error: string,
     loading: boolean,
-    modal: boolean,
+    modalRemove: boolean,
+    modalError: boolean,
     lastFocus: string,
     favorites: CharacterModel[],
+    favoriteCount: number,
     filters: Filter,
     search: string,
 };
@@ -46,10 +49,6 @@ const { info: info_characters, results: characters, error } = await fetch(`${CHA
 
 if (initialStateFilter.page_episodes) query.set("page", initialStateFilter.page_episodes.toString());
 const { info: info_episodes, results: episodes } = await fetch(`${EPISODE}?${query}`).then(res => res.json()).catch((e) => console.log(`Back to page 1: ${e}`))
-const initialModal = getLocalStorage(
-    "modal",
-    JSON.stringify(false)
-)
 
 const initialFavorites = getLocalStorage(
     "favorites",
@@ -88,13 +87,16 @@ export const fetchData = createAsyncThunk(
 // init state
 const initialState = {
     characters: characters as CharacterModel[],
+    characterToBeRemoved: null as CharacterModel | null,
     episodes: episodes as EpisodeModel[],
     info_characters: info_characters as InfoModel,
     info_episodes: info_episodes as InfoModel,
     error: error as string,
     loading: false,
-    modal: initialModal as boolean,
+    modalRemove: false as boolean,
+    modalError: false as boolean,
     favorites: initialFavorites as CharacterModel[],
+    favoriteCount: initialFavorites.length as number,
     filters: initialStateFilter,
     search: "" as string
 } as UserSelectionsState;
@@ -104,17 +106,26 @@ const userSelectionsSlice = createSlice({
     initialState,
     reducers: {
         addFavourite(state: UserSelectionsState, action: PayloadAction<CharacterModel>) {
-            state.favorites.push(action.payload);
+            state.favorites.push({
+                ...action.payload,
+                isFavorite: true
+            });
+            state.favoriteCount = state.favorites.length;
+            localStorage.setItem("favoriteCount", state.favoriteCount.toString());
+
             state.characters.map((c: CharacterModel) => {
                 if (c.id === action.payload.id) {
                     c.isFavorite = true;
                 }
                 return c;
             });
+
             localStorage.setItem("favorites", JSON.stringify(state.favorites));
         },
         removeFavorite(state, action) {
             state.favorites = state.favorites.filter((c: CharacterModel) => c.id !== action.payload.id);
+            state.favoriteCount = state.favorites.length;
+            localStorage.setItem("favoriteCount", state.favoriteCount.toString());
             state.characters = state.characters.map((c: CharacterModel) => {
                 if (c.id === action.payload.id) {
                     c.isFavorite = false;
@@ -171,7 +182,27 @@ const userSelectionsSlice = createSlice({
             localStorage.setItem("status", "");
             localStorage.setItem("species", "");
             localStorage.setItem("gender", "");
-        }
+        },
+        openModalRemove(state, action) {
+            state.modalRemove = true;
+            state.characterToBeRemoved = action.payload;
+            localStorage.setItem("modal", JSON.stringify(true));
+        },
+        closeModalRemove(state) {
+            state.modalRemove = false;
+            state.characterToBeRemoved = null;
+            localStorage.setItem("modal", JSON.stringify(false));
+        },
+        openModalError(state, action) {
+            state.modalError = true;
+            state.characterToBeRemoved = action.payload;
+            localStorage.setItem("modalError", JSON.stringify(true));
+        },
+        closeModalError(state) {
+            state.modalError = false;
+            localStorage.setItem("modalError", JSON.stringify(false));
+        },
+
     },
     extraReducers: (builder) => {
         builder.addCase(fetchData.pending, (state) => {
@@ -214,18 +245,11 @@ export const {
     setStatus,
     setSpecies,
     setGender,
-    resetFilters
+    resetFilters,
+    openModalRemove,
+    closeModalRemove,
+    openModalError,
+    closeModalError,
 } = userSelectionsSlice.actions;
-
-export const selectCharacters = (state: RootState) => state.userSelections.characters;
-export const selectEpisodes = (state: RootState) => state.userSelections.episodes;
-export const selectInfoCharacters = (state: RootState) => state.userSelections.info_characters;
-export const selectInfoEpisodes = (state: RootState) => state.userSelections.info_episodes;
-export const selectError = (state: RootState) => state.userSelections.error;
-export const selectLoading = (state: RootState) => state.userSelections.loading;
-export const selectModal = (state: RootState) => state.userSelections.modal;
-export const selectLastFocus = (state: RootState) => state.userSelections.lastFocus;
-export const selectFavorites = (state: RootState) => state.userSelections.favorites;
-export const selectFilters = (state: RootState) => state.userSelections.filters;
 
 export default userSelectionsSlice.reducer;

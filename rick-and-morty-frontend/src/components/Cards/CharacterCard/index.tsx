@@ -4,8 +4,8 @@ import { lazyLoading } from "@/utils";
 import React from "react";
 import { Heart } from "@/assets/icons/Heart";
 import { CharacterModel } from "@/types";
-import { useDispatch } from "react-redux";
-import { addFavourite, removeFavorite } from "@/features/slices/userSelectionsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavourite, openModalError, openModalRemove } from "@/features/slices/userSelectionsSlice";
 import { BsDot } from "react-icons/bs";
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
 
 const CharacterCard: React.FC<Props> = ({ character }) => {
     const dispatch = useDispatch();
+    const favoriteCount = useSelector((state: any) => state.userSelections.favoriteCount);
     const imgRef = React.useRef<HTMLImageElement>(null);
     console.log(character);
     React.useEffect(() => {
@@ -26,9 +27,16 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
     const handleOnClickFavorite = (e: React.SyntheticEvent<EventTarget>) => {
         e.stopPropagation();
         e.preventDefault();
-        character.isFavorite ?
-            dispatch(removeFavorite(character)) :
-            dispatch(addFavourite(character));
+        // if character is favorite, open modal
+        if (character.isFavorite) {
+            dispatch(openModalRemove(character));
+        } else {
+            if (favoriteCount < 10) {
+                dispatch(addFavourite(character));
+            } else {
+                dispatch(openModalError(character));
+            }
+        }
     };
 
     return (
