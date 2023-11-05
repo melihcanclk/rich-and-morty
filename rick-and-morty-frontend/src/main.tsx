@@ -6,13 +6,14 @@ import NotFound from './pages/NotFound/index.tsx'
 import AllCharacters from './pages/AllCharacters/index.tsx'
 import '@/styles/global.scss'
 import FiltersProvider from '@/providers/FiltersProvider.tsx'
+import { Header } from './components/Header/index.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {/* <UserProvider> */}
     <FiltersProvider>
       <BrowserRouter>
+      <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="all-characters" element={<AllCharacters />} />
@@ -20,6 +21,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </Routes>
       </BrowserRouter>
     </FiltersProvider>
-    {/* </UserProvider> */}
   </React.StrictMode >
 )

@@ -12,3 +12,26 @@ $fz-xs: 1.4rem;
 $fz-sm: 1.6rem;
 $fz-md: 1.8rem;
 $fz-lg: 2rem;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 32px;
+
+$header-height: 72px;
+$header-background: rgb(255, 255, 255);
+$header-background2: rgb(0, 0, 0);
+$header-text-color: rgb(15, 15, 15);
+$header-text-color2: rgb(240, 240, 240);
+$header-primary: rgb(22, 210, 247);
+
+$sm: 37.5em;
+$md: 48em;
+$lg: 64em;
+$xl: 75em;
+
+@mixin breakpoint($point) {
+    @if $point == md {
+        @media (min-width: $md) {
+            @content;
+        }
+    }
+}

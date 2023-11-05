@@ -18,3 +18,13 @@
     font: variables.$fz-md variables.$font;
   }
 }
+
+.main {
+  // start 72px below the header
+  margin-top: variables.$header-height;
+  padding: variables.$spacing-md;
+  background: variables.$gradient;
+  min-height: 100vh;
+  color: variables.$main-text-color;
+  
+}

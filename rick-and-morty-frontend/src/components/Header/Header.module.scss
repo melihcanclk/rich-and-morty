@@ -1,0 +1,122 @@
+@use "@/styles/variables.scss";
+.header {
+  height: variables.$header-height;
+  background: variables.$header-background2;
+  color: variables.$header-text-color2;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 1px 5px variables.$main-color;
+
+  &__content {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 variables.$spacing-md;
+    @include variables.breakpoint(md) {
+      padding: 0 variables.$spacing-lg;
+    }
+    transition: 0.3s ease padding;
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    & > div {
+      flex: 1;
+      white-space: nowrap;
+
+      &:nth-child(2) {
+        display: flex;
+        justify-content: flex-end;
+        height: 100%;
+
+        margin-right: variables.$spacing-md;
+      }
+      &:last-of-type {
+        display: flex;
+        justify-content: flex-end;
+        flex: 0;
+      }
+    }
+  }
+
+  &__button__container {
+    display: none;
+    @include variables.breakpoint(md) {
+      display: initial;
+    }
+  }
+  &__toggler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: variables.$main-color;
+    @include variables.breakpoint(md) {
+      display: none;
+    }
+    & > svg {
+      display: block;
+      font-size: 32px;
+    }
+  }
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 700;
+  color: variables.$header-text-color2;
+}
+
+.nav {
+  width: 100%;
+  position: fixed;
+  top: variables.$header-height;
+  right: -100%;
+  background: rgba(variables.$header-background2, 0.8);
+  text-align: center;
+  padding: variables.$spacing-md 0;
+
+  &--open {
+    transition: 0.2s ease right;
+    right: 0;
+  }
+
+  &__item {
+    display: block;
+    padding: variables.$spacing-md;
+    font-size: variables.$fz-lg;
+    text-decoration: none;
+    color: inherit;
+
+    height: 100%;
+
+    transition: 0.3s ease color;
+    &:hover {
+      color: variables.$main-color;
+    }
+  }
+
+  @include variables.breakpoint(md) {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: initial;
+    width: auto;
+    padding: 0;
+
+    &__item {
+      padding: 0 variables.$spacing-lg;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__button__container {
+    @include variables.breakpoint(md) {
+      display: none;
+    }
+    padding: variables.$spacing-md;
+  }
+}

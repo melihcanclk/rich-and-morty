@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./Home.module.scss";
+import styles from "@/styles/Home.module.scss";
 import Hero from '../../components/Hero'
 import imgError from "@/assets/images/error.jpg";
 import Controls from '@/components/Controls';
@@ -13,19 +13,21 @@ const Home = () => {
     const { loading, error } = useSelector((state: any) => state.userSelections);
 
     return (
-        <main>
-            <Hero />
-            <Controls />
-            <React.Suspense fallback={<Loader />}>
-                {!loading && error && (
-                    <div className={styles.error}>
-                        <img src={imgError} alt="Error" />
-                        <p aria-live="assertive">{error}</p>
-                    </div>
-                )}
-                <CharacterGrid />
-                <Pagination />
-            </React.Suspense>
+        <main >
+            <div className={styles.main}>
+                <Hero />
+                <Controls />
+                <React.Suspense fallback={<Loader />}>
+                    {!loading && error && (
+                        <div className={styles.error}>
+                            <img src={imgError} alt="Error" />
+                            <p aria-live="assertive">{error}</p>
+                        </div>
+                    )}
+                    <CharacterGrid />
+                    <Pagination />
+                </React.Suspense>
+            </div>
         </main>
     )
 }
