@@ -6,6 +6,7 @@ import { Heart } from "@/assets/icons/Heart";
 import { CharacterModel } from "@/types";
 import { useDispatch } from "react-redux";
 import { addFavourite, removeFavorite } from "@/features/slices/userSelectionsSlice";
+import { BsDot } from "react-icons/bs";
 
 interface Props {
     character: CharacterModel;
@@ -14,7 +15,7 @@ interface Props {
 const CharacterCard: React.FC<Props> = ({ character }) => {
     const dispatch = useDispatch();
     const imgRef = React.useRef<HTMLImageElement>(null);
-
+    console.log(character);
     React.useEffect(() => {
         if (imgRef.current) {
             lazyLoading(imgRef);
@@ -30,43 +31,58 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
             dispatch(addFavourite(character));
     };
 
+
     return (
-        <button
-            id={`character-${character?.id}`}
-            key={character?.id}
-            className={`${styles.character} skeleton`}
-            title={`See details of ${character?.name}`}
-            type="button"
-        >
-            {character?.image &&
-                (character?.isFavorite ? (
-                    <div
-                        title="Remove from favorites"
-                        className={styles.favorite}
-                        onClick={handleOnClickFavorite}
-                        tabIndex={0}
-                    >
-                        <Heart />
-                    </div>
-                ) : (
-                    <div
-                        title="Add to favorites"
-                        onClick={handleOnClickFavorite}
-                        tabIndex={0}
-                    >
-                        <Heart />
-                    </div>
-                ))}
-            <img
-                className="hide"
-                data-src={character?.image}
-                alt={character?.name}
-                width={200}
-                height={200}
-                ref={imgRef}
-            />
-            {character?.image && <p>{character.name}</p>}
-        </button>
+        <div>
+            <button
+                id={`character-${character?.id}`}
+                key={character?.id}
+                className={`${styles.character} skeleton`}
+                title={`See details of ${character?.name}`}
+                type="button"
+            >
+                {character?.image &&
+                    (character?.isFavorite ? (
+                        <div
+                            title="Remove from favorites"
+                            className={styles.favorite}
+                            onClick={handleOnClickFavorite}
+                            tabIndex={0}
+                        >
+                            <Heart />
+                        </div>
+                    ) : (
+                        <div
+                            title="Add to favorites"
+                            onClick={handleOnClickFavorite}
+                            tabIndex={0}
+                        >
+                            <Heart />
+                        </div>
+                    ))}
+                <img
+                    className="hide"
+                    data-src={character?.image}
+                    alt={character?.name}
+                    width={200}
+                    height={200}
+                    ref={imgRef}
+                />
+                <p className={styles.character__status}>
+                    {
+                        character?.status === "Alive" ? <BsDot style={{
+                            color: "green"
+                        }} /> : character?.status === "Dead" ? <BsDot style={{
+                            color: "red"
+                        }} /> : <BsDot style={{
+                            color: "gray"
+                        }} />}
+                    {character?.status} - {character?.species} - {character?.gender}
+                </p>
+                {character?.image && <p className={styles.name}>{character.name}</p>}
+            </button >
+
+        </div>
     );
 };
 

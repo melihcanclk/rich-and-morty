@@ -6,7 +6,6 @@ import EpisodeCard from "@/components/Cards/EpisodeCard";
 
 const CharacterGrid = () => {
 	const { episodes } = useSelector((state: RootState) => state.userSelections);
-	console.log(episodes);
 
 	return (
 		<Grid>
