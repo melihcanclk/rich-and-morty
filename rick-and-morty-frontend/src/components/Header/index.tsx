@@ -1,6 +1,5 @@
 import * as React from "react";
 import styles from "./Header.module.scss";
-import Button from "../Button";
 import { BiMenuAltRight } from "react-icons/bi";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 import { useSelector } from "react-redux";
@@ -12,17 +11,13 @@ const Header = () => {
     return (
         <div className={styles.header}>
             <div className={styles.header__content}>
-                <div>
-                    <span className={styles.logo}>
-                        <a href="/">R&M App</a>
-                    </span>
-                </div>
+                
                 <div>
                     <nav className={`${styles.nav} ${menuOpen ? styles[`nav--open`] : {}}`}>
                         <a className={styles.nav__item} href={"/characters"}>
                             Characters
                         </a>
-                        <a className={styles.nav__item} href={"/"}>
+                        <a className={styles.nav__item} href={"/episodes"}>
                             Episodes
                         </a>
                         <a className={styles.nav__item} href={"/favorites"}>

@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Home from './pages/Home/index.tsx'
 import NotFound from './pages/NotFound/index.tsx'
 import '@/styles/global.scss'
 import FiltersProvider from '@/providers/FiltersProvider.tsx'
@@ -11,6 +10,7 @@ import Character from './pages/Character/index.tsx'
 import Characters from './pages/Characters/index.tsx'
 import Favorites from './pages/Favorites/index.tsx'
 import MainLayout from './layout/MainLayout.tsx'
+import Episodes from './pages/Home/index.tsx'
 // TODO: COnvert them to relative paths
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -20,7 +20,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Header />
         <MainLayout>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Episodes />} />
+            <Route path="/episodes" element={<Episodes />} />
             <Route path='/episode/:id' element={<Episode />} />
             <Route path='/characters' element={<Characters />} />
             <Route path='/character/:id' element={<Character />} />

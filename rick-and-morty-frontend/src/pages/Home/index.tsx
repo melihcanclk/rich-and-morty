@@ -6,7 +6,7 @@ import { RootState } from '@/store/store';
 import { setPageEpisodes } from '@/features/slices/userSelectionsSlice';
 
 
-const Home = () => {
+const Episodes = () => {
     const filters = useSelector((state: RootState) => state.userSelections.filters);
     const info_episodes = useSelector((state: RootState) => state.userSelections.info_episodes);
 
@@ -24,4 +24,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Episodes
