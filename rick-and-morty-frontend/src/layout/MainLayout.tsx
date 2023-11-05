@@ -5,7 +5,7 @@ import { Loader } from '@/assets/icons/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '@/components/Modal';
 import Button from '@/components/Button';
-import { closeModalError, closeModalRemove, removeFavorite } from '@/features/slices/userSelectionsSlice';
+import { clearFavorites, closeModalError, closeModalRemove, closeModalRemoveAll, removeFavorite } from '@/features/slices/userSelectionsSlice';
 import { PAGINATION_LIMIT } from '@/utils/constants';
 
 const MainLayout = ({
@@ -13,11 +13,15 @@ const MainLayout = ({
 }: {
     children: React.ReactNode
 }) => {
-    const { loading, error, characterToBeRemoved, modalRemove, modalError } = useSelector((state: any) => state.userSelections);
+    const { loading, error, characterToBeRemoved, modalRemove, modalError, modalRemoveAll } = useSelector((state: any) => state.userSelections);
     const dispatch = useDispatch();
 
     const handleOnClickCloseRemove = () => {
         dispatch(closeModalRemove());
+    }
+
+    const handleOnClickCloseRemoveAll = () => {
+        dispatch(closeModalRemoveAll());
     }
 
     const handleOnClickCloseError = () => {
@@ -27,6 +31,11 @@ const MainLayout = ({
     const handleOnClickRemove = () => {
         dispatch(closeModalRemove());
         dispatch(removeFavorite(characterToBeRemoved));
+    };
+
+    const handleOnClickRemoveAll = () => {
+        dispatch(clearFavorites());
+        dispatch(closeModalRemoveAll());
     };
 
     return (
@@ -43,7 +52,7 @@ const MainLayout = ({
                 </React.Suspense>
                 <Modal
                     modal={modalRemove}
-                    closeModal={() => closeModalRemove()}
+                    closeModal={handleOnClickCloseRemove}
                     children={
                         <div >
                             <h2>Do you want to remove {characterToBeRemoved?.name} from favorites?</h2>
@@ -58,6 +67,28 @@ const MainLayout = ({
                                     onClick={handleOnClickRemove}
                                 >
                                     <span>Remove from favorites</span>
+                                </Button>
+                            </div>
+                        </div>
+                    }
+                />
+                <Modal
+                    modal={modalRemoveAll}
+                    closeModal={handleOnClickCloseRemoveAll}
+                    children={
+                        <div >
+                            <h2>Do you want to clear favorites?</h2>
+                            <div className={styles.buttons}>
+                                <Button
+                                    onClick={handleOnClickCloseRemoveAll}
+                                >
+                                    <span>Cancel</span>
+                                </Button>
+                                <Button
+                                    className={styles.remove_button}
+                                    onClick={handleOnClickRemoveAll}
+                                >
+                                    <span>Clear All</span>
                                 </Button>
                             </div>
                         </div>

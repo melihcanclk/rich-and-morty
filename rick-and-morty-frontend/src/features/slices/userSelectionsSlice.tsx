@@ -17,6 +17,7 @@ type UserSelectionsState = {
     error: string,
     loading: boolean,
     modalRemove: boolean,
+    modalRemoveAll: boolean,
     modalError: boolean,
     lastFocus: string,
     favorites: CharacterModel[],
@@ -118,6 +119,7 @@ const initialState = {
     error: error as string,
     loading: false,
     modalRemove: false as boolean,
+    modalRemoveAll: false as boolean,
     modalError: false as boolean,
     favorites: initialFavorites as CharacterModel[],
     favoriteCount: initialFavorites.length as number,
@@ -157,6 +159,12 @@ const userSelectionsSlice = createSlice({
                 return c;
             });
             localStorage.setItem("favorites", JSON.stringify(state.favorites));
+        },
+        clearFavorites(state) {
+            state.favorites = [];
+            state.favoriteCount = 0;
+            localStorage.setItem("favorites", JSON.stringify(state.favorites));
+            localStorage.setItem("favoriteCount", state.favoriteCount.toString());
         },
         setCharacters(state, action) {
             state.characters = action.payload;
@@ -221,6 +229,14 @@ const userSelectionsSlice = createSlice({
             state.characterToBeRemoved = null;
             localStorage.setItem("modal", JSON.stringify(false));
         },
+        openModalRemoveAll(state) {
+            state.modalRemoveAll = true;
+            localStorage.setItem("modalAll", JSON.stringify(true));
+        },
+        closeModalRemoveAll(state) {
+            state.modalRemoveAll = false;
+            localStorage.setItem("modalAll", JSON.stringify(false));
+        },
         openModalError(state, action) {
             state.modalError = true;
             state.characterToBeRemoved = action.payload;
@@ -268,6 +284,7 @@ const userSelectionsSlice = createSlice({
 export const {
     addFavourite,
     removeFavorite,
+    clearFavorites,
     setCharacters,
     setPageCharacters,
     setPageEpisodes,
@@ -279,6 +296,8 @@ export const {
     resetFilters,
     openModalRemove,
     closeModalRemove,
+    openModalRemoveAll,
+    closeModalRemoveAll,
     openModalError,
     closeModalError,
 } = userSelectionsSlice.actions;
