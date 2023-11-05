@@ -1,18 +1,15 @@
 import * as React from "react";
 import styles from "./Modal.module.scss";
-import { useDispatch } from "react-redux";
 
 import { Close } from "@/assets/icons/Close";
-import { AnyAction } from "redux";
 
 const Modal = ({
     children, modal, closeModal
 }: {
     children: React.ReactNode,
     modal: boolean,
-    closeModal: () => AnyAction
+    closeModal: () => void
 }) => {
-    const dispatch = useDispatch();
     const asideRef = React.useRef<HTMLButtonElement>(null);
 
     React.useEffect(() => {
@@ -20,7 +17,7 @@ const Modal = ({
     }, [modal]);
 
     const handleCloseModal = () => {
-        dispatch(closeModal());
+        closeModal()
     };
 
     return (
