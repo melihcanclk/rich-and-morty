@@ -6,7 +6,6 @@
   flex-direction: column;
   justify-content: center;
   padding: 2rem;
-  
 
   img {
     border-radius: 50%;
@@ -26,5 +25,16 @@
   background: variables.$gradient;
   min-height: 100vh;
   color: variables.$main-text-color;
-  
+}
+.remove_button {
+  background-color: red;
+}
+
+.buttons {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 2rem;
+  align-items: center !important;
+  justify-content: center;
+  margin-bottom: 1rem;
 }

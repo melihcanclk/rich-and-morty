@@ -3,10 +3,12 @@ import styles from "./Header.module.scss";
 import Button from "../Button";
 import { BiMenuAltRight } from "react-icons/bi";
 import { AiOutlineCloseSquare } from "react-icons/ai";
+import { useSelector } from "react-redux";
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = React.useState(false);
     const menuToggler = () => setMenuOpen((p) => !p);
+    const favoriteCount = useSelector((state: any) => state.userSelections.favoriteCount);
     return (
         <div className={styles.header}>
             <div className={styles.header__content}>
@@ -17,14 +19,14 @@ const Header = () => {
                 </div>
                 <div>
                     <nav className={`${styles.nav} ${menuOpen ? styles[`nav--open`] : {}}`}>
-                        <a className={styles.nav__item} href={"/all-characters"}>
+                        <a className={styles.nav__item} href={"/characters"}>
                             Characters
                         </a>
                         <a className={styles.nav__item} href={"/"}>
                             Episodes
                         </a>
-                        <a className={styles.nav__item} href={"/"}>
-                            Page Three
+                        <a className={styles.nav__item} href={"/favorites"}>
+                            Favorites ({favoriteCount})
                         </a>
                         {/* <div className={styles.nav__button__container}>
                             <Button
