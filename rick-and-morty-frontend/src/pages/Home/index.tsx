@@ -7,7 +7,6 @@ import { Loader } from '@/assets/icons/Loader';
 import Pagination from '@/components/Pagination';
 import { useSelector } from 'react-redux';
 
-const CharacterGrid = React.lazy(() => import("@/components/CharacterGrid"));
 
 const Home = () => {
     const { loading, error } = useSelector((state: any) => state.userSelections);
@@ -24,8 +23,7 @@ const Home = () => {
                             <p aria-live="assertive">{error}</p>
                         </div>
                     )}
-                    <CharacterGrid />
-                    <Pagination />
+                    
                 </React.Suspense>
             </div>
         </main>
