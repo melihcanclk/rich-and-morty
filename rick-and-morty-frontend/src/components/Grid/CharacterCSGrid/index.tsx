@@ -3,6 +3,7 @@ import Grid from "@/components/Grid";
 import CharacterCard from "@/components/Cards/CharacterCard";
 import PaginationCS from "@/components/PaginationCS";
 import React from "react";
+import { PAGINATION_LIMIT } from "@/utils/constants";
 
 interface Props {
 	characters: CharacterModel[];
@@ -11,9 +12,9 @@ interface Props {
 const CharacterCSGrid = ({ characters }: Props) => {
 
 	const [input, setInput] = React.useState(1);
-	// devide the characters array into arrays of 10 characters 
+	// devide the characters array into arrays of ${PAGINATIN_LIMIT} characters 
 	const charactersPerPage = characters?.reduce((resultArray: any, item: any, index: number) => {
-		const chunkIndex = Math.floor(index / 10);
+		const chunkIndex = Math.floor(index / PAGINATION_LIMIT);
 
 		if (!resultArray[chunkIndex]) {
 			resultArray[chunkIndex] = []; // start a new chunk

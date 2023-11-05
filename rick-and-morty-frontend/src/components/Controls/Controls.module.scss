@@ -2,7 +2,7 @@
 
 .controls {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(1, 1fr);
   gap: 2rem;
   margin: 0 auto;
   max-width: variables.$max-width;
@@ -10,15 +10,21 @@
   width: 100%;
 }
 
-@media screen and (min-width: 472px) {
+.reset {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+@media screen and (min-width: 390px) {
   .controls {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr auto;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 1fr;
   }
 }
 
 @media screen and (min-width: 692px) {
   .controls {
-    grid-template-columns: repeat(3, 1fr) auto;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr) ;
   }
 }

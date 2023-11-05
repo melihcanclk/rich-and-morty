@@ -8,13 +8,13 @@ const CharacterGrid = () => {
 	const { characters } = useSelector((state: RootState) => state.userSelections);
 
 	return (
-		<div>
+		<>
 			<Grid>
 				{characters?.map((character: CharacterModel) => (
 					<CharacterCard key={character.id} character={character} />
 				))}
 			</Grid>
-		</div>
+		</>
 	);
 };
 

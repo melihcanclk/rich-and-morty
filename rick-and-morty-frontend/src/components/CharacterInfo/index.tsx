@@ -5,6 +5,7 @@ import Accordion from "@/components/Accordion";
 import { useDispatch, useSelector } from "react-redux";
 import { Heart } from "@/assets/icons/Heart";
 import { addFavourite, openModalError, openModalRemove } from "@/features/slices/userSelectionsSlice";
+import { PAGINATION_LIMIT } from "@/utils/constants";
 
 const EpisodeGrid = ({
     episode
@@ -65,7 +66,7 @@ const CharacterInfo = ({ id }: { id: string }) => {
             dispatch(openModalRemove(characterInfo));
             setCharacterInfo({ ...characterInfo, isFavorite: false });
         } else {
-            if (favoriteCount < 10) {
+            if (favoriteCount < PAGINATION_LIMIT) {
                 dispatch(addFavourite(characterInfo as CharacterModel));
                 setCharacterInfo({ ...characterInfo, isFavorite: true });
             } else {

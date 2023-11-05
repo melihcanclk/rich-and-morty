@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from '@/components/Modal';
 import Button from '@/components/Button';
 import { closeModalError, closeModalRemove, removeFavorite } from '@/features/slices/userSelectionsSlice';
+import { PAGINATION_LIMIT } from '@/utils/constants';
 
 const MainLayout = ({
     children
@@ -70,7 +71,7 @@ const MainLayout = ({
                             <h2>
                                 Cannot add {characterToBeRemoved?.name} to favorites.
                                 <br />
-                                Maximum number of favorites is 10.
+                                Maximum number of favorites is {PAGINATION_LIMIT}.
                             </h2>
                         </div>
                     }

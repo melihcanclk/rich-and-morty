@@ -1,27 +1,21 @@
 import React from "react";
 import styles from "./Search.module.scss";
 import { Close } from "@/assets/icons/Close";
-import { useDispatch, useSelector } from "react-redux";
-import { setSearch } from "@/features/slices/userSelectionsSlice";
 
 interface Props {
     value?: string;
     placeholder?: string;
-    loading: boolean;
+    onClickReset: () => void;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    searchValue: string;
 }
 
 const Search = ({
     placeholder,
+    onClickReset,
+    handleChange,
+    searchValue
 }: Props) => {
-    const [display, setDisplay] = React.useState(false);
-
-    const dispatch = useDispatch();
-    const filters = useSelector((state: any) => state.userSelections.filters);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!display) setDisplay(true);
-        dispatch(setSearch(e.target.value));
-    };
 
     return (
         <div className={styles.search} >
@@ -31,13 +25,13 @@ const Search = ({
                 onChange={handleChange}
                 placeholder={placeholder}
                 type="search"
-                value={filters.search}
+                value={searchValue}
             />
-            {filters.search && (
+            {searchValue && (
                 <button
                     title="reset"
                     type="reset"
-                    onClick={() => dispatch(setSearch(""))}
+                    onClick={onClickReset}
                     className={styles.search__reset}
                 >
                     <Close />

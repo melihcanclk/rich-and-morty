@@ -7,6 +7,7 @@ import { CharacterModel } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavourite, openModalError, openModalRemove } from "@/features/slices/userSelectionsSlice";
 import { BsDot } from "react-icons/bs";
+import { PAGINATION_LIMIT } from "@/utils/constants";
 
 interface Props {
     character: CharacterModel;
@@ -31,7 +32,7 @@ const CharacterCard: React.FC<Props> = ({ character }) => {
         if (character.isFavorite) {
             dispatch(openModalRemove(character));
         } else {
-            if (favoriteCount < 10) {
+            if (favoriteCount < PAGINATION_LIMIT) {
                 dispatch(addFavourite(character));
             } else {
                 dispatch(openModalError(character));
