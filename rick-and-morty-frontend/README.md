@@ -6,6 +6,9 @@ Rick and Morty application is a simple application that allows you to search for
 
 ## Installation
 
+Use the package manager [npm](https://www.npmjs.com/) to install the application.
+npm 18.0.1 or higher is recommended.
+
 ```bash
 $ git clone
 $ cd rick-and-morty-frontend
